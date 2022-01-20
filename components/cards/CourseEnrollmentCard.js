@@ -1,41 +1,29 @@
-import React, {Fragment} from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React, {Fragment, useState} from "react";
 import {enrollStudentToCourse} from "../../lib/auth";
 
-class CourseEnrollmentCard extends React.Component {
-
-    state = {
-        enrolled: false
+const enroll = async (courseId, setEnrolled) => {
+    const status = await enrollStudentToCourse(courseId);
+    if (status === 200) {
+        setEnrolled(true);
     }
+}
 
-    enrollStudentToCourse = async () => {
 
-        const status = await enrollStudentToCourse(this.props.course.id);
-        if (status === 200) {
-            this.setState({
-                enrolled: true
-            });
-        }
-    }
+function CourseEnrollmentCard(props) {
+    const [enrolled, setEnrolled] = useState(false)
 
-    render() {
-        return (
-            <Fragment>
-                <div className="border rounded text-uppercase position-relative text-center">
-                    <h1 className="text-xl mb-0 ">{this.props.course.courseName}</h1>
-                    <h5 className="text-xl mb-0">{this.props.course.description}</h5>
-                    <h6 className="text-sm mb-0">difficulty level : {this.props.course.level}</h6>
-                    <button type="button" className="btn btn-success"
-                            onClick={this.enrollStudentToCourse}
-                            disabled={this.state.enrolled}>
-                        Enroll This Course
-                    </button>
-                </div>
-            </Fragment>
-        )
-    }
-
+    return (
+        <div className="border rounded text-uppercase position-relative text-center">
+            <h1 className="text-xl mb-0 ">{props.course.courseName}</h1>
+            <h5 className="text-xl mb-0">{props.course.description}</h5>
+            <h6 className="text-sm mb-0">difficulty level : {props.course.level}</h6>
+            <button type="button" className="btn btn-success"
+                    onClick={() => enroll(props.course.id, setEnrolled)}
+                    disabled={enrolled}>
+                Enroll This Course
+            </button>
+        </div>
+    )
 }
 
 export default CourseEnrollmentCard;

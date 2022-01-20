@@ -18,7 +18,6 @@ class TeacherCourseContentListItem extends React.Component {
             </Fragment>
         )
     }
-
 }
 
 export default TeacherCourseContentListItem;

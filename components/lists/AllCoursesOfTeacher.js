@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import TeacherCourseCard from "../cards/TeacherCourseCard";
+import Pagination from "../pagination/Pagination";
 
 
 const getAllCoursesOfTeacher = async (teacherId, pageIndex) => {
@@ -25,7 +26,6 @@ const getAllCoursesOfTeacher = async (teacherId, pageIndex) => {
         }
     });
 };
-
 
 function AllCoursesOfTeacher(props) {
 
@@ -62,21 +62,8 @@ function AllCoursesOfTeacher(props) {
                     {coursesList}
                 </ul>
             </div>
-            <div className="position-absolute bottom-0 mb-4">
-                <button className="btn btn-primary"
-                        onClick={() => {
-                            if (pageIndex > 0) {
-                                setPageIndex(pageIndex - 1)
-                            }
-                        }}>Previous
-                </button>
-                <button className="btn btn-primary"
-                        onClick={() => setPageIndex(pageIndex + 1)}>Next Page
-                </button>
-            </div>
-
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
-
 
 }
 

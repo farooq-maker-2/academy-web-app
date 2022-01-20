@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import StudentCourseCard from "../cards/StudentCourseCard";
+import Pagination from "../pagination/Pagination";
 
 const getEnrolledCoursesOfStudent = async (studentId, pageIndex) => {
     console.log('inside Enrolled Courses Of Student Component')
@@ -94,18 +95,7 @@ function AllCoursesOfStudent(props) {
                     {coursesList}
                 </ul>
             </div>
-            <div className="position-absolute bottom-0 mb-4">
-                <button className="btn btn-primary"
-                        onClick={() => {
-                            if (pageIndex > 0) {
-                                setPageIndex(pageIndex - 1)
-                            }
-                        }}>Previous
-                </button>
-                <button className="btn btn-primary"
-                        onClick={() => setPageIndex(pageIndex + 1)}>Next Page
-                </button>
-            </div>
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
 
 }
