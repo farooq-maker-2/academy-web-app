@@ -2,7 +2,7 @@ import React from "react";
 import AllCoursesOfStudent from "../../components/lists/AllCoursesOfStudent";
 import {withRouter} from "next/router";
 
-function AllCoursesOFTeacher(props) {
+function AllCoursesOFStudent(props) {
 
     console.log("id inside student get courses page")
     console.log(props.router.query.studentId)
@@ -11,4 +11,4 @@ function AllCoursesOFTeacher(props) {
 
 }
 
-export default withRouter(AllCoursesOFTeacher)
+export default withRouter(AllCoursesOFStudent)

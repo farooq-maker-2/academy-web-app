@@ -12,8 +12,11 @@ const Layout = (props) => {
         return router.push('/all_time_best');
     }
 
-    const showAllCoursesOfStudent = async () => {
-        return router.push('/enrolled_courses');
+    const showAllCoursesOfStudent = async (studentId) => {
+        return router.push({
+            pathname: '/all_courses_of_student',
+            query: {studentId: studentId}
+        });
     }
 
     const searchTeachers = async () => {
@@ -84,7 +87,7 @@ const Layout = (props) => {
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={showAllCoursesOfStudent}>Your Courses</a>
+                    <a href="#" className="nav-link active" onClick={() => showAllCoursesOfStudent(Cookies.get('userId'))}>Your Courses</a>
                 </li>
 
                 <li className="nav-item">

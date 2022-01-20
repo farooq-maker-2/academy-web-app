@@ -2,7 +2,7 @@ import React from "react";
 import {withRouter} from "next/router";
 import {router} from "next/client";
 import Cookies from "js-cookie";
-import {deactivateUser} from "../lib/auth";
+import {deactivateUser} from "../../lib/auth";
 
 class TeacherListItem extends React.Component {
 

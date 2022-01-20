@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import CourseEnrollmentCard from "../cards/CourseEnrollmentCard";
-import TeacherListItem from "../TeacherListItem";
+import TeacherListItem from "../lists/TeacherListItem";
 
 class SearchTeacher extends React.Component {
 

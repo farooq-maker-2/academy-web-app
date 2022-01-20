@@ -1,7 +1,8 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import TeacherCourseContentCard from "./TeacherCourseContentCard";
+import {withRouter} from "next/router";
+import TeacherCourseContentListItem from "./lists/TeacherCourseContentListItem";
 
 class TeacherCourseDetails extends React.Component {
 
@@ -62,7 +63,15 @@ class TeacherCourseDetails extends React.Component {
                         'content-type': 'multipart/form-data'
                     }
                 }).then(res => {
-                console.log(res.status)
+                if (res && res.status === 200) {
+                    console.log(res.status)
+                    this.props.router.push({
+                        pathname: '/all_courses_of_teacher',
+                        query: {teacherId: this.props.teacherId}
+                    });
+                } else {
+                    console.log("failed to upload file!!!")
+                }
             }).catch(err => console.log("Error ", err))
 
         } catch (err) {
@@ -76,7 +85,7 @@ class TeacherCourseDetails extends React.Component {
     render() {
 
         const contentList = this.state.contents?.map((content) => (
-            <TeacherCourseContentCard key={content.id} content={content} courseId={this.state.courseId}/>
+            <TeacherCourseContentListItem key={content.id} content={content} courseId={this.state.courseId}/>
         ));
 
         return (
@@ -108,4 +117,4 @@ class TeacherCourseDetails extends React.Component {
 
 }
 
-export default TeacherCourseDetails;
+export default withRouter(TeacherCourseDetails);

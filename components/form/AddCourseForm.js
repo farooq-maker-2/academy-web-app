@@ -64,18 +64,28 @@ class AddCourseForm extends React.Component {
                 const userId = Cookies.get("userId");
                 data.append('file', file/*this.state.file*//*, file.name*/);
 
-                return await axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`, data, {
+                await axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`, data, {
                     headers: {
                         AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
                         'content-type': 'multipart/form-data'
                     }
-                }).then(res => {console.log(res)}).catch(err => console.log(err));
+                }).then(res => {
+                    if (res && res.status === 200) {
+                        console.log("success")
+                        console.log(res)
+                        this.props.router.push({
+                            pathname: '/all_courses_of_teacher',
+                            query: {teacherId: this.props.teacherId}
+                        })
+                    } else {
+                        console.log("failed to upload course content")
+                    }
+                }).catch(err => console.log(err));
             }
 
         } catch (err) {
             console.log(err);
         }
-        this.props.router.push('/all_courses_of_teacher');
 
     }
 

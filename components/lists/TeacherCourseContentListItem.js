@@ -1,6 +1,6 @@
 import React, {Fragment} from "react";
 
-class TeacherCourseContentCard extends React.Component {
+class TeacherCourseContentListItem extends React.Component {
 
     state = {
         file: '',
@@ -11,7 +11,8 @@ class TeacherCourseContentCard extends React.Component {
         return (
             <Fragment>
                 <div className="border rounded position-relative">
-                    <a1 href="#" className="mb-1 position-relative text-lg-start">{this.props.content.fileName}</a1>
+                    {/*<a1 href="#" className="mb-1 position-relative text-lg-start">{this.props.content.fileName}</a1>*/}
+                    <span className="mb-1 position-relative">{this.props.content.fileName}</span>
                 </div>
                 <br/>
             </Fragment>
@@ -20,4 +21,4 @@ class TeacherCourseContentCard extends React.Component {
 
 }
 
-export default TeacherCourseContentCard;
+export default TeacherCourseContentListItem;

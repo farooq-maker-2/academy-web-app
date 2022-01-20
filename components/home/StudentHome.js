@@ -50,7 +50,7 @@ class StudentHome extends React.Component {
     render() {
 
         const courses = this.state.courses?.map((course) => (
-                <CourseEnrollmentCard key={course.id} course={course}/>
+            <CourseEnrollmentCard key={course.id} course={course}/>
         ));
 
 
@@ -74,13 +74,14 @@ class StudentHome extends React.Component {
                 </div>
                 <br/>
                 {/*<div className="position-relative bottom-0 end-50">*/}
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex - 1)}>Previous
-                </button>
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex + 1)}>Next Page
-                </button>
-                {/*</div>*/}
+                <div className="position-absolute bottom-0 mb-4">
+                    <button className="btn btn-primary"
+                            onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex - 1)}>Previous
+                    </button>
+                    <button className="btn btn-primary"
+                            onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex + 1)}>Next Page
+                    </button>
+                </div>
             </div>
         );
     }
