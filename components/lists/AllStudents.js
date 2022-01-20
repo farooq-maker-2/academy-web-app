@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import StudentListItem from "../StudentListItem";
+import StudentListItem from "./StudentListItem";
 
 class AllStudents extends React.Component {
 

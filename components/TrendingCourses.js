@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import CourseEnrollmentCard from "./cards/CourseEnrollmentCard";
 
-class Trending extends React.Component {
+class TrendingCourses extends React.Component {
 
     state = {
         courses: []
@@ -20,7 +20,7 @@ class Trending extends React.Component {
 
     getTrendingCourses = async () => {
 
-        console.log('inside Trending Component')
+        console.log('inside TrendingCourses Component')
         return await axios.get('http://localhost:8081/api/courses/top_trending', {
             //get page number programmatically
             params: {
@@ -53,4 +53,4 @@ class Trending extends React.Component {
 
 }
 
-export default Trending;
+export default TrendingCourses;

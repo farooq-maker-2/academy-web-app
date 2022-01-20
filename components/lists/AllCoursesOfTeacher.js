@@ -1,78 +1,82 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import TeacherCourseCard from "../cards/TeacherCourseCard";
 
-class AllCoursesOfTeacher extends React.Component {
 
-    state = {
-        courses: [],
-        pageIndex: 0
+const getAllCoursesOfTeacher = async (teacherId, pageIndex) => {
+
+    console.log('inside All Courses Of Teacher Component')
+    //when teacher is logged in
+    let userId = teacherId;
+    //when admin ris logged in
+    if (!userId) {
+        userId = Cookies.get('userId')
     }
+    console.log("userId", userId)
+    console.log("pageIndex", pageIndex)
 
-    componentDidMount() {
-        this.getAllCoursesOfTeacher().then(/*res => console.log(res.status)*/);
-    }
-
-    getAllCoursesOfTeacher = async () => {
-
-        console.log('inside All Courses Of Teacher Component')
-        let userId = this.props.teacherId;
-        if (!userId) {
-            userId = Cookies.get('userId')
+    return axios.get(`http://localhost:8081/api/teachers/${userId}/courses`, {
+        params: {
+            page: pageIndex
+        },
+        headers: {
+            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
         }
-        console.log("userId", userId)
-        console.log("pageIndex", this.state.pageIndex)
+    });
+};
 
-        return await axios.get(`http://localhost:8081/api/teachers/${userId}/courses`, {
-            params: {
-                page: this.state.pageIndex
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+
+function AllCoursesOfTeacher(props) {
+
+    const [courses, setCourses] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
+
+    useEffect(() => {
+        getAllCoursesOfTeacher(props.teacherId, pageIndex).then(res => {
+            if (res && res.status === 200) {
+                console.log("success")
+                setCourses(res.data)
+            } else {
+                console.log("failure")
             }
-        }).then(res => {
-            const {pageIndex} = this.state;
-            this.setState({
-                courses: res.data,
-                pageIndex: pageIndex
-            });
         }).catch(err => console.log("Error ", err));
-    };
 
-    updateAndFetch = async (courses, updatedIndex) => {
-        await this.setState({
-            courses: courses,
-            pageIndex: updatedIndex
-        })
-        return this.getAllCoursesOfTeacher();
-    }
+    }, [pageIndex]);
 
-    render() {
 
-        const courses = this.state.courses?.map((course) => (
-            <div key={course.id}>
-                <TeacherCourseCard course={course} teacherId={this.props.teacherId}/>
-            </div>
+    let coursesList;
+    if (courses && courses.length > 0) {
+        coursesList = courses?.map((course) => (
+            <TeacherCourseCard key={course.id} course={course} teacherId={props.teacherId}/>
         ));
-
-        return (
-            <div>
-                <h1>Your Courses</h1>
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {courses}
-                    </ul>
-                </div>
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex - 1)}>Previous
-                </button>
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex + 1)}>Next Page
-                </button>
-
-            </div>);
+    } else {
+        coursesList = <label className="mb-3">No courses found !!!</label>
     }
+
+    return (
+        <div>
+            <h1>Your Courses</h1>
+            <div>
+                <ul className="list-group list-group-flush">
+                    {coursesList}
+                </ul>
+            </div>
+            <div className="position-absolute bottom-0 mb-4">
+                <button className="btn btn-primary"
+                        onClick={() => {
+                            if (pageIndex > 0) {
+                                setPageIndex(pageIndex - 1)
+                            }
+                        }}>Previous
+                </button>
+                <button className="btn btn-primary"
+                        onClick={() => setPageIndex(pageIndex + 1)}>Next Page
+                </button>
+            </div>
+
+        </div>);
+
 
 }
 

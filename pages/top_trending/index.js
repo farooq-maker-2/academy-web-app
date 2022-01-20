@@ -1,7 +1,7 @@
-import Trending from "../../components/Trending";
+import TrendingCourses from "../../components/TrendingCourses";
 import React from "react";
 
-export default function TrendingCourses() {
+export default function TrendingCOURSES() {
 
-    return <Trending/>
+    return <TrendingCourses/>
 }
