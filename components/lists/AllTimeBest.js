@@ -1,54 +1,49 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import CourseCard from "../cards/CourseCard";
 
-class AllTimeBest extends React.Component {
+const getAllTimeBestCourses = async () => {
+    console.log('inside All Time Best Courses Component')
+    return axios.get('http://localhost:8081/api/courses/all_time_top_ten', {
+        headers: {
+            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+        }
+    });
+};
 
-    state = {
-        courses: []
-    }
+function AllTimeBest() {
 
-    componentDidMount() {
-        this.getAllTimeBestCourses().then(res => {
-            this.setState({
-                courses: res.data
-            });
-        }).catch(err => console.log("Error ", err));
-        ;
-    }
+    const [courses, setCourses] = useState([]);
 
-    getAllTimeBestCourses = async () => {
-
-        console.log('inside All Time Best Courses Component')
-        return await axios.get('http://localhost:8081/api/courses/all_time_top_ten', {
-            //get page number programmatically
-            params: {
-                page: 0
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+    useEffect(() => {
+        getAllTimeBestCourses().then(res => {
+            if (res && res.status === 200) {
+                console.log("success")
+                setCourses(res.data)
+            } else {
+                console.log("failure")
             }
-        });
-    };
+        }).catch(err => console.log("Error ", err));
 
-    render() {
+    }, []);
 
-        const courses = this.state.courses?.map((course) => (
-            <CourseCard key={course.id} course={course}/>
-        ));
-
-        return (
-            <div className="text-center">
-                <h1>All Time Best Courses</h1>
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {courses}
-                    </ul>
-                </div>
-            </div>);
+    let coursesList;
+    if (courses.length == 0) {
+        coursesList = <label>loading...</label>
+    } else {
+        coursesList = courses?.map((course) => (<CourseCard key={course.id} course={course}/>));
     }
 
+    return (
+        <div className="text-center">
+            <h1>All Time Best Courses</h1>
+            <div>
+                <ul className="list-group list-group-flush">
+                    {coursesList}
+                </ul>
+            </div>
+        </div>);
 }
 
 export default AllTimeBest;

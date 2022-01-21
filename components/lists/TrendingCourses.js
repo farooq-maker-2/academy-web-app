@@ -1,55 +1,51 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import CourseCard from "../cards/CourseCard";
 
-class TrendingCourses extends React.Component {
 
-    state = {
-        courses: []
-    }
+const getTrendingCourses = async () => {
 
-    componentDidMount() {
-        this.getTrendingCourses().then(res => {
-            const courses = res.data
-            this.setState({
-                courses
-            });
-        }).catch(err => console.log("Error ", err));
-    }
+    console.log('inside TrendingCourses Component')
+    return await axios.get('http://localhost:8081/api/courses/top_trending', {
+        headers: {
+            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+        }
+    });
+};
 
-    getTrendingCourses = async () => {
+function TrendingCourses() {
 
-        console.log('inside TrendingCourses Component')
-        return await axios.get('http://localhost:8081/api/courses/top_trending', {
-            //get page number programmatically
-            params: {
-                page: 0
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+    const [courses, setCourses] = useState([]);
+
+    useEffect(() => {
+        getTrendingCourses().then(res => {
+            if (res && res.status === 200) {
+                console.log("success")
+                setCourses(res.data)
+            } else {
+                console.log("failure")
             }
-        });
-    };
+        }).catch(err => console.log("Error ", err));
 
-    render() {
+    }, []);
 
-        const courses = this.state.courses?.map((course) => (
-            /*<CourseEnrollmentCard key={course.id} course={course}/>*/
-            <CourseCard key={course.id} course={course}/>
-        ));
-
-        return (
-            <div className="text-center">
-                <h1>Top Trending</h1>
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {courses}
-                    </ul>
-                </div>
-            </div>);
+    let coursesList;
+    if (courses.length == 0) {
+        coursesList = <label>loading...</label>
+    } else {
+        coursesList = courses?.map((course) => (<CourseCard key={course.id} course={course}/>));
     }
 
+    return (
+        <div className="text-center">
+            <h1>Top Trending</h1>
+            <div>
+                <ul className="list-group list-group-flush">
+                    {coursesList}
+                </ul>
+            </div>
+        </div>);
 }
 
 export default TrendingCourses;
