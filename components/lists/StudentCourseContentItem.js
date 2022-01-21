@@ -3,7 +3,7 @@ import {router} from "next/client";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-class StudentCourseContentCard extends React.Component {
+class StudentCourseContentItem extends React.Component {
 
     state = {
         content: this.props.content
@@ -54,11 +54,10 @@ class StudentCourseContentCard extends React.Component {
         }
     };
 
-
     render() {
         return (
 
-            <div className="border rounded position-relative">
+            <div className="border rounded position-relative mb-3">
 
                 <div className="mb-1 position-relative text-lg-start">{this.props.content.fileName}</div>
                 <button className="position-absolute btn btn-sm btn-primary end-0 bottom-0"
@@ -70,4 +69,4 @@ class StudentCourseContentCard extends React.Component {
 
 }
 
-export default StudentCourseContentCard;
+export default StudentCourseContentItem;

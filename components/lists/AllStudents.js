@@ -1,74 +1,47 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import StudentListItem from "./StudentListItem";
+import Pagination from "../pagination/Pagination";
 
-class AllStudents extends React.Component {
+const getAllStudents = async (pageIndex) => {
 
-    state = {
-        students: [],
-        pageIndex: 0
-    }
+    console.log('inside getAllStudents')
+    return axios.get('http://localhost:8081/api/students', {
+        params: {
+            page: pageIndex
+        },
+        headers: {
+            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+        }
+    });
+};
 
-    componentDidMount() {
-        this.getAllStudents().then(res => {
-            console.log(res.status)
-        });
-    }
+function AllStudents() {
 
-    getAllStudents = async () => {
+    const [students, setStudents] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
 
-        console.log('inside getAllStudents')
-        return await axios.get('http://localhost:8081/api/students', {
-            params: {
-                page: this.state.pageIndex
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-            }
-        }).then(res => {
-            this.setState({
-                students: res.data.content,
-                pageIndex: 0
-            });
+    useEffect(() => {
+        getAllStudents(pageIndex).then(res => {
+            setStudents(res.data.content)
         }).catch(err => console.log("Error ", err));
-    };
+    }, [pageIndex]);
 
-    updateAndFetch = async (students, updatedIndex) => {
-        //event.preventDefault();
-        //to update the index in state
-        //const updatedState =
-        this.setState({
-            students,
-            pageIndex: updatedIndex
-        })
-        return this.getAllStudents();
-    }
+    const studentsList = students?.map((student) => (
+        <StudentListItem key={student.id} student={student}/>
+    ));
 
-    render() {
-
-        const students = this.state.students?.map((student) => (
-                <StudentListItem key={student.id} student={student} router={this.router}/>
-        ));
-
-        return (
+    return (
+        <div>
+            <h1>All Students</h1>
             <div>
-                <h1>All Students</h1>
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {students}
-                    </ul>
-                </div>
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.students, this.state.pageIndex - 1)}>Previous
-                </button>
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.students, this.state.pageIndex + 1)}>Next Page
-                </button>
-
-            </div>);
-    }
-
+                <ul className="list-group list-group-flush">
+                    {studentsList}
+                </ul>
+            </div>
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
+        </div>);
 }
 
 export default AllStudents;

@@ -1,12 +1,10 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import TeacherCourseCard from "../cards/TeacherCourseCard";
+import CourseCard from "../cards/CourseCard";
 import Pagination from "../pagination/Pagination";
 
-
 const getAllCoursesOfTeacher = async (teacherId, pageIndex) => {
-
     console.log('inside All Courses Of Teacher Component')
     //when teacher is logged in
     let userId = teacherId;
@@ -44,11 +42,10 @@ function AllCoursesOfTeacher(props) {
 
     }, [pageIndex]);
 
-
     let coursesList;
     if (courses && courses.length > 0) {
         coursesList = courses?.map((course) => (
-            <TeacherCourseCard key={course.id} course={course} teacherId={props.teacherId}/>
+            <CourseCard key={course.id} course={course} teacherId={props.teacherId}/>
         ));
     } else {
         coursesList = <label className="mb-3">No courses found !!!</label>
@@ -64,7 +61,6 @@ function AllCoursesOfTeacher(props) {
             </div>
             <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
-
 }
 
 export default AllCoursesOfTeacher;

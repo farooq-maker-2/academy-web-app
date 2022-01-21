@@ -1,23 +1,23 @@
-import React, {Fragment} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 
-class TeacherCourseContentListItem extends React.Component {
+function TeacherCourseContentListItem(props) {
 
-    state = {
-        file: '',
-        courseId: this.props.courseId
-    }
+    const [content, setContent] = useState({});
+    const [courseId, setCourseId] = useState(-1);
+    useEffect(() => {
+        setContent(props.content)
+        setCourseId(props.courseId)
+    }, []);
 
-    render() {
-        return (
-            <Fragment>
-                <div className="border rounded position-relative">
-                    {/*<a1 href="#" className="mb-1 position-relative text-lg-start">{this.props.content.fileName}</a1>*/}
-                    <span className="mb-1 position-relative">{this.props.content.fileName}</span>
-                </div>
-                <br/>
-            </Fragment>
-        )
-    }
+    return (
+        <Fragment>
+            <div className="border rounded position-relative">
+                {/*<a1 href="#" className="mb-1 position-relative text-lg-start">{this.props.content.fileName}</a1>*/}
+                <span className="mb-1 position-relative">{content.fileName}</span>
+            </div>
+            <br/>
+        </Fragment>
+    )
 }
 
 export default TeacherCourseContentListItem;

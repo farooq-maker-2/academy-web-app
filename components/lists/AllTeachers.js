@@ -1,71 +1,45 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import TeacherListItem from "./TeacherListItem";
+import Pagination from "../pagination/Pagination";
 
-class AllTeachers extends React.Component {
-
-    state = {
-        teachers: [],
-        pageIndex: 0
-    }
-
-    componentDidMount() {
-        this.getAllTeachers().then(res => {
-            const teachers = res.data.content
-            this.setState({
-                teachers
-            });
-        }).catch(err => console.log("Error ", err));
-    }
-
-    getAllTeachers = async () => {
-        await axios.get('http://localhost:8081/api/teachers', {
-            params: {
-                page: this.state.pageIndex
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-            }
-        });
-    };
-
-    updateAndFetch = async (teachers, updatedIndex) => {
-        const updatedState = {
-            teachers,
-            pageIndex: updatedIndex
+const getAllTeachers = async (pageIndex) => {
+    return axios.get('http://localhost:8081/api/teachers', {
+        params: {
+            page: pageIndex
+        },
+        headers: {
+            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
         }
-        await this.setState(updatedState)
-    }
+    });
+};
 
-    render() {
+function AllTeachers() {
 
-        const teachers = this.state.teachers?.map((teacher) => (
-            <TeacherListItem key={teacher.id} teacher={teacher} router={this.router}/>
-        ));
+    const [teachers, setTeachers] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
 
-        return (
+    useEffect(() => {
+        getAllTeachers(pageIndex).then(res => {
+            setTeachers(res.data.content)
+        }).catch(err => console.log("Error ", err));
+    }, [pageIndex]);
+
+    const teachersList = teachers?.map((teacher) => (
+        <TeacherListItem key={teacher.id} teacher={teacher}/>
+    ));
+
+    return (
+        <div>
+            <h1>All Teachers</h1>
             <div>
-                <h1>All Teachers</h1>
-
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {teachers}
-                    </ul>
-                </div>
-
-                {/*<div className="position-relative bottom-0 end-50">*/}
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.teachers, this.state.pageIndex - 1)}>Previous
-                </button>
-                <button className="btn btn-primary"
-                        onClick={() => this.updateAndFetch(this.state.teachers, this.state.pageIndex + 1)}>Next Page
-                </button>
-                {/*</div>*/}
-
-            </div>);
-    }
-
+                <ul className="list-group list-group-flush">
+                    {teachersList}
+                </ul>
+            </div>
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
+        </div>);
 }
 
 export default AllTeachers;

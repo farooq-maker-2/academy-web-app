@@ -1,51 +1,50 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {withRouter} from "next/router";
 import {router} from "next/client";
 import Cookies from "js-cookie";
 import {deactivateUser} from "../../lib/auth";
 
-class TeacherListItem extends React.Component {
+const getAllCoursesOfTeacher = async (teacherId) => {
+    await router.push({
+        pathname: '/all_courses_of_teacher',
+        query: {teacherId: teacherId}
+    })
+};
 
-    state = {
-        teacher: this.props.teacher,
+const deactivate = async (teacherId) => {
+    await deactivateUser(teacherId, "teacher");
+}
+
+function TeacherListItem(props) {
+
+    const [teacher, setTeacher] = useState({});
+
+    useEffect(() => {
+        setTeacher(props.teacher)
+    }, [teacher]);
+
+    let controls;
+    if (Cookies.get("role") && Cookies.get("role") === 'admin') {
+        controls = (
+            <div>
+                <button className="btn btn-primary" onClick={() => getAllCoursesOfTeacher(teacher.id)}> View Courses
+                </button>
+                <button className="btn btn-primary" onClick={() => deactivate(teacher.id)}> Deactivate
+                </button>
+            </div>);
+    } else if (Cookies.get("role") && Cookies.get("role") === 'student') {
+        controls = (
+            <div>
+                <button className="btn btn-primary" onClick={() => getAllCoursesOfTeacher(teacher.id)}> View Courses
+                </button>
+            </div>);
     }
-
-    getAllCoursesOfTeacher = async () => {
-        await router.push({
-            pathname: '/all_courses_of_teacher',
-            query: {teacherId: this.props.teacher.id}
-        })
-    };
-
-    deactivate = async () => {
-        await deactivateUser(this.state.teacher.id, "teacher");
-    }
-
-    render() {
-        let controls;
-        if (Cookies.get("role") && Cookies.get("role") === 'admin') {
-            controls = (
-                <div>
-                    <button className="btn btn-primary" onClick={this.getAllCoursesOfTeacher}> View Courses
-                    </button>
-                    <button className="btn btn-primary" onClick={this.deactivate}> Deactivate
-                    </button>
-                </div>);
-        } else if (Cookies.get("role") && Cookies.get("role") === 'student') {
-            controls = (
-                <div>
-                    <button className="btn btn-primary" onClick={this.getAllCoursesOfTeacher}> View Courses
-                    </button>
-                </div>);
-        }
-        return (
-            <div className="border rounded position-relative text-center">
-
-                <h1 className="mb-1 position-relative ">{this.props.teacher.firstName} {this.props.teacher.lastName}</h1>
-                {controls}
-            </div>
-        )
-    }
+    return (
+        <div className="border rounded position-relative text-center">
+            <h1 className="mb-1 position-relative ">{teacher.firstName} {teacher.lastName}</h1>
+            {controls}
+        </div>
+    )
 }
 
 export default withRouter(TeacherListItem);

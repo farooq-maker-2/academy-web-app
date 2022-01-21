@@ -1,91 +1,69 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import CourseEnrollmentCard from "../cards/CourseEnrollmentCard";
+import CourseCard from "../cards/CourseCard";
+import Pagination from "../pagination/Pagination";
 
-class StudentHome extends React.Component {
+const getAllCourses = async (pageIndex) => {
+    return axios.get('http://localhost:8081/api/courses', {
+        params: {
+            page: pageIndex
+        },
+        headers: {
+            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+        }
+    });
+};
 
-    state = {
-        courses: [],
-        teachers: [],
-        pageIndex: 0
-    }
+function StudentHome() {
 
-    componentDidMount() {
-        this.getAllCourses().then(res => {
-            this.setState({
-                courses: res.data.content
-            })
-        }).catch(err => {
-            console.log(err);
-        });
-    }
+    const [courses, setCourses] = useState([]);
+    const [teachers, setTeachers] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
 
-    getAllCourses = async () => {
-
-        return await axios.get('http://localhost:8081/api/courses', {
-            params: {
-                page: this.state.pageIndex
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+    useEffect(() => {
+        getAllCourses(pageIndex).then(res => {
+            if (res && res.status === 200) {
+                console.log("success")
+                setCourses(res.data.content)
+            } else {
+                console.log("failure")
             }
-        });
-    };
+        }).catch(err => console.log("Error ", err));
 
-    updateAndFetch = async (courses, updatedIndex) => {
-        this.setState({
-            courses,
-            pageIndex: updatedIndex
-        })
-        return this.getAllCourses().then(res => {
-            this.setState({
-                courses: res.data.content
-            })
-        }).catch(err => {
-            console.log(err);
-        });
-    }
-
-    render() {
-
-        const courses = this.state.courses?.map((course) => (
-            <CourseEnrollmentCard key={course.id} course={course}/>
-        ));
+    }, [pageIndex]);
 
 
-        return (
+    // updateAndFetch = async (courses, updatedIndex) => {
+    //     this.setState({
+    //         courses,
+    //         pageIndex: updatedIndex
+    //     })
+    //     return this.getAllCourses().then(res => {
+    //         this.setState({
+    //             courses: res.data.content
+    //         })
+    //     }).catch(err => {
+    //         console.log(err);
+    //     });
+    // }
+
+    let coursesList = courses?.map((course) => (
+        <CourseCard key={course.id} course={course}/>
+    ));
+
+    return (
+        <div className="text-center">
+            <h1>Student Home</h1>
             <div>
-                <h1>Student Home</h1>
-                {/*{*/}
-                {/*    this.state.courses.map(c => <h6 key={c.id}>{c.title}</h6>)*/}
-                {/*}*/}
-                {/*{this.getAllCourses()}*/}
-                {/*<div>*/}
-                {/*    <input type="text" placeholder="Search.." name="search"/>*/}
-                {/*    <button type="submit"*/}
-                {/*            onClick={this.updateAndFetch(this.state.courses, this.state.pageIndex - 1)}>Submit*/}
-                {/*    </button>*/}
-                {/*</div>*/}
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {courses}
-                    </ul>
-                </div>
-                <br/>
-                {/*<div className="position-relative bottom-0 end-50">*/}
-                <div className="position-absolute bottom-0 mb-4">
-                    <button className="btn btn-primary"
-                            onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex - 1)}>Previous
-                    </button>
-                    <button className="btn btn-primary"
-                            onClick={() => this.updateAndFetch(this.state.courses, this.state.pageIndex + 1)}>Next Page
-                    </button>
-                </div>
+                <ul className="list-group list-group-flush">
+                    {coursesList}
+                </ul>
             </div>
-        );
-    }
-
+            <br/>
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
+        </div>
+    );
 }
 
 export default StudentHome;

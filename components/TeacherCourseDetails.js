@@ -1,120 +1,124 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import {withRouter} from "next/router";
 import TeacherCourseContentListItem from "./lists/TeacherCourseContentListItem";
+import {router} from "next/client";
 
-class TeacherCourseDetails extends React.Component {
-
-    state = {
-        contents: [],
-        courseId: this.props.courseId
-    }
-
-    componentDidMount() {
-        this.getCourseContents().then(res => {
-            const contents = res.data
-            const {courseId} = this.state
-            this.setState({
-                contents,
-                courseId
-            });
-        }).catch(err => console.log("Error ", err));
-    }
-
-    getCourseContents = async () => {
-
-        console.log('Inside getCourseContents function')
-        console.log(this.state.course)
-
-        return await axios.get(`http://localhost:8081/api/courses/${this.state.courseId}/contents`, {
+const getCourseContents = async (courseId) => {
+    if (courseId && courseId !== null) {
+        return await axios.get(`http://localhost:8081/api/courses/${courseId}/contents`, {
             headers: {
                 AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
             }
         });
-    };
-
-    fileSelectedHandler = event => {
-        const updatedState = {
-            file: event.target.files[0]
-        }
-        this.setState(updatedState)
-        console.log(this.state);
+    } else {
+        console.log("failed to fetch course content");
     }
+};
 
-    handleSubmit = async (event) => {
+const handleSubmit = async (file, courseId, userId) => {
+    event.preventDefault();
+    console.log('Inside upload content function')
+    try {
+        const data = new FormData()
+        const userId = Cookies.get("userId");
+        data.append('file', file);
 
-        event.preventDefault();
-
-        console.log('Inside upload content function')
-        try {
-            if (this.state.file) {
-                console.log('file exists')
-            }
-
-            const data = new FormData()
-            const userId = Cookies.get("userId");
-            data.append('file', this.state.file);
-
-            return await axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${this.state.courseId}/contents`,
-                data, {
-                    headers: {
-                        AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
-                        'content-type': 'multipart/form-data'
-                    }
-                }).then(res => {
-                if (res && res.status === 200) {
-                    console.log(res.status)
-                    this.props.router.push({
-                        pathname: '/all_courses_of_teacher',
-                        query: {teacherId: this.props.teacherId}
-                    });
-                } else {
-                    console.log("failed to upload file!!!")
+        if (file !== null) {
+            console.log("file exists!!!")
+        }
+        return await axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`,
+            data, {
+                headers: {
+                    AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
+                    'content-type': 'multipart/form-data'
                 }
-            }).catch(err => console.log("Error ", err))
+            }).then(res => {
+            if (res && res.status === 200) {
+                console.log(res.status)
+                router.push({
+                    pathname: '/all_courses_of_teacher',
+                    query: {teacherId: userId}
+                });
+            } else {
+                console.log("failed to upload file!!!")
+            }
+        }).catch(err => console.log("Error ", err))
 
-        } catch (err) {
-            console.log(err);
-        }
-        this.props.router.push('/teacher_home');
+    } catch (err) {
+        console.log(err);
+    }
+    await router.push('/teacher_home');
 
+}
+
+const fileSelectedHandler = (event, setFile) => {
+    setFile(event.target.files[0])
+}
+
+function TeacherCourseDetails(props) {
+
+    const [contents, setContents] = useState([]);
+    const [courseId, setCourseId] = useState(-1);
+    const [file, setFile] = useState(null);
+    //const file = useRef(null)
+
+    useEffect(() => {
+        getCourseContents(props.courseId).then(res => {
+            if (res && res.status === 200) {
+                console.log("success")
+                setCourseId(props.courseId)
+                setContents(res.data)
+            } else {
+                console.log("failure")
+            }
+        }).catch(err => console.log("Error ", err));
+
+    }, [courseId]);
+
+
+    let contentList;
+    if (contents && contents.length > 0) {
+        contentList = contents?.map((content) => (<div key={content.id}>
+            <TeacherCourseContentListItem key={content.id} content={content} courseId={props.courseId}/>
+        </div>));
+    } else {
+        contentList = <label className="mb-3">No contents found !!!</label>
     }
 
-
-    render() {
-
-        const contentList = this.state.contents?.map((content) => (
-            <TeacherCourseContentListItem key={content.id} content={content} courseId={this.state.courseId}/>
-        ));
-
-        return (
-            <div href="#" className="border rounded text-uppercase text-center">
-                <h1 className="text-xl mb-1">Course Contents</h1>
+    return (
+        <div href="#" className="border rounded text-uppercase text-center">
+            <h1 className="text-xl mb-1">Course Contents</h1>
+            <div>
                 <div>
-
-                    <div>
-                        <ul className="list-group list-group-flush">
-                            {contentList}
-                        </ul>
-                    </div>
-
-                    <form onSubmit={this.handleSubmit}>
-                        <input type="file"
-                               name="file"
-                               className="border rounded position-relative"
-                               placeholder="file"
-                               required
-                               onChange={this.fileSelectedHandler}/><br/>
-                        <br/>
-                        <button className="btn btn-lg btn-primary" type="submit">Upload</button>
-                    </form>
-
+                    <ul className="list-group list-group-flush">
+                        {contentList}
+                    </ul>
                 </div>
-            </div>
-        )
-    }
+                <form onSubmit={() => handleSubmit(file, courseId)}>
 
+                    {/*If you pass a ref object to React with <div ref={myRef} />,
+                     React will set its .current property to the corresponding DOM
+                     node whenever that node changes. Keep in mind that useRef doesn’t
+                     notify you when its content changes.
+                     Mutating the .current property doesn’t cause a re-render.
+                    */}
+                    <input type="file"
+                           name="file"
+                           className="border rounded position-relative"
+                           placeholder="file"
+                           required
+                        /*ref={file}*/
+                        /*onChange={() => setFile(event.target.file)}*/
+                           onChange={(event) => fileSelectedHandler(event, setFile)}/><br/>
+                    <br/>
+                    <button className="btn btn-lg btn-primary" type="submit">Upload</button>
+                </form>
+
+            </div>
+        </div>
+    )
 }
 
 export default withRouter(TeacherCourseDetails);

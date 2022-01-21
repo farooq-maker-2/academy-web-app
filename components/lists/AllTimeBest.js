@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import CourseEnrollmentCard from "../cards/CourseEnrollmentCard";
+import CourseCard from "../cards/CourseCard";
 
 class AllTimeBest extends React.Component {
 
@@ -35,19 +35,17 @@ class AllTimeBest extends React.Component {
     render() {
 
         const courses = this.state.courses?.map((course) => (
-            <CourseEnrollmentCard key={course.id} course={course}/>
+            <CourseCard key={course.id} course={course}/>
         ));
 
         return (
-            <div>
+            <div className="text-center">
                 <h1>All Time Best Courses</h1>
-
                 <div>
                     <ul className="list-group list-group-flush">
                         {courses}
                     </ul>
                 </div>
-
             </div>);
     }
 
