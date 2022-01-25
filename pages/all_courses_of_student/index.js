@@ -1,6 +1,4 @@
 import React, {useEffect, useState} from "react";
-import Cookies from "js-cookie";
-import axios from "axios";
 import {getEnrolledCoursesOfStudent} from "../../lib/lib";
 import StudentCourseCard from "../../components/cards/StudentCourseCard";
 import Pagination from "../../components/pagination/Pagination";
@@ -33,7 +31,6 @@ function AllCoursesOfStudent(props) {
                 courses={courses}
                 course={course}
                 studentId={props.studentId}
-                optOut={optOutHandler}
                 setCourses={setCourses}
             />
         </div>));
@@ -52,35 +49,6 @@ function AllCoursesOfStudent(props) {
             <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
 }
-
-const optOutHandler = async (studentId, courseId, courses, setCourses) => {
-
-    console.log('Inside opt out function')
-    console.log(courseId)
-    try {
-        let userId = studentId;
-        if (!userId) {
-            userId = Cookies.get('userId')
-        }
-        console.log('userId ' + userId)
-        console.log('courseId ' + courseId)
-        const res = await axios.put(`http://localhost:8081/api/students/${userId}/courses/${courseId}`, {}, {
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-            }
-        });
-
-        if (res.status && res.status === 200) {
-            setCourses(courses.filter(course => {
-                return course.id !== courseId
-            }));
-        } else {
-            console.log("failed to opt out!!!")
-        }
-    } catch (err) {
-        console.log(err);
-    }
-};
 
 
 export default AllCoursesOfStudent;

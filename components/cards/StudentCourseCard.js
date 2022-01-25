@@ -1,6 +1,7 @@
 import React from "react";
 import Cookies from "js-cookie";
 import {withRouter} from "next/router";
+import {optOutHandler} from "../../lib/lib";
 
 const getCourseDetails = async (courseId, router) => {
     return router.push({
@@ -14,7 +15,7 @@ function StudentCourseCard(props) {
         let controls;
         let commonControls = (<button type="button" className="btn btn-danger border-4"
                                       onClick={() =>
-                                          props.optOut(
+                                          optOutHandler(
                                               props.studentId,
                                               props.course.id,
                                               props.courses,

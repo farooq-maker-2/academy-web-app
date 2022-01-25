@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import Cookies from "js-cookie";
-import {enrollStudentToCourse} from "../../lib/lib";
+import {deleteCourse, enrollStudentToCourse} from "../../lib/lib";
 import {useRouter} from "next/router";
 
 function CourseCard(props) {
@@ -20,12 +20,11 @@ function CourseCard(props) {
                     pathname: '/course_details',
                     query: {courseId: course.id}
                 })
-            }}>View & Add
-                Contents</button>)
+            }}>View & Add Contents</button>)
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'admin') {
         controls = (
             <button className="btn btn-primary"
-                    onClick={() => props.delete(props.courses, props.course.id, props.setCourses)}>
+                    onClick={() => deleteCourse(props.courses, props.course.id, props.setCourses)}>
                 Delete Course
             </button>)
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'student') {
