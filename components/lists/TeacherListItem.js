@@ -1,19 +1,15 @@
 import React, {useEffect, useState} from "react";
-import {withRouter} from "next/router";
-import {router} from "next/client";
 import Cookies from "js-cookie";
-import {deactivateUser} from "../../lib/auth";
+import {deactivateUser} from "../../lib/lib";
+import {withRouter} from "next/router";
 
-const getAllCoursesOfTeacher = async (teacherId) => {
+const getAllCoursesOfTeacher = async (teacherId, router) => {
+
     await router.push({
         pathname: '/all_courses_of_teacher',
         query: {teacherId: teacherId}
     })
 };
-
-const deactivate = async (teacherId) => {
-    await deactivateUser(teacherId, "teacher");
-}
 
 function TeacherListItem(props) {
 
@@ -27,15 +23,18 @@ function TeacherListItem(props) {
     if (Cookies.get("role") && Cookies.get("role") === 'admin') {
         controls = (
             <div>
-                <button className="btn btn-primary" onClick={() => getAllCoursesOfTeacher(teacher.id)}> View Courses
+                <button className="btn btn-primary"
+                        onClick={() => getAllCoursesOfTeacher(teacher.id, props.router)}>
+                    View Courses
                 </button>
-                <button className="btn btn-primary" onClick={() => deactivate(teacher.id)}> Deactivate
+                <button className="btn btn-primary" onClick={() => deactivateUser(teacher.id, "teacher")}> Deactivate
                 </button>
             </div>);
     } else if (Cookies.get("role") && Cookies.get("role") === 'student') {
         controls = (
             <div>
-                <button className="btn btn-primary" onClick={() => getAllCoursesOfTeacher(teacher.id)}> View Courses
+                <button className="btn btn-primary"
+                        onClick={() => getAllCoursesOfTeacher(teacher.id, props.router)}> View Courses
                 </button>
             </div>);
     }

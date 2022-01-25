@@ -3,7 +3,25 @@ import Head from "next/head";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
-import {deactivateUser} from "../lib/auth";
+import {deactivateUser} from "../lib/lib";
+
+//
+// About hyperlinks:
+//     The main use of anchor tags - <a></a> - is as hyperlinks.
+//     That basically means that they take you somewhere.
+//     Hyperlinks require the href property, because it specifies a location.
+//
+//     Hash:
+// A hash - # within a hyperlink specifies an html element id to which the window should be scrolled.
+//
+//     href="#some-id" would scroll to an element on the current page such as <div id="some-id">.
+//
+// href="//site.com/#some-id" would go to site.com and scroll to the id on that page.
+//
+//     Scroll to Top:
+//     href="#" doesn't specify an id name, but does have a corresponding location - the top of the page.
+//     Clicking an anchor with href="#" will move the scroll position to the top.
+
 
 const Layout = (props) => {
     const router = useRouter();
@@ -23,13 +41,12 @@ const Layout = (props) => {
         return router.push('/teachers_by_name');
     }
 
-
     const showTrendingCourses = async () => {
         return router.push('/top_trending');
     }
 
     const logout = async () => {
-        var c = document.cookie.split("; ");
+        let c = document.cookie.split("; ");
         for (let i in c)
             document.cookie = /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
         await router.push('/login');
@@ -37,12 +54,15 @@ const Layout = (props) => {
 
     const deactivate = async () => {
 
-        await deactivateUser();
-        //invalidate cookies
-        var c = document.cookie.split("; ");
-        for (let i in c)
-            document.cookie = /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        await router.push('/register');
+        deactivateUser().then(res => {
+            if (res && res.status === 200) {
+                //invalidate cookies
+                let c = document.cookie.split("; ");
+                for (let i in c)
+                    document.cookie = /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                router.push('/register');
+            }
+        });
     }
 
     const addCourse = async () => {
@@ -87,7 +107,8 @@ const Layout = (props) => {
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={() => showAllCoursesOfStudent(Cookies.get('userId'))}>Your Courses</a>
+                    <a href="#" className="nav-link active"
+                       onClick={() => showAllCoursesOfStudent(Cookies.get('userId'))}>Your Courses</a>
                 </li>
 
                 <li className="nav-item">
@@ -159,9 +180,11 @@ const Layout = (props) => {
             <nav className="navbar navbar-expand-md bg-dark mb-4"
                  styles="background-color: #1884b5">
                 <div className="container-fluid">
-                    <Link href="/">
-                        <a className="navbar-brand">Home</a>
-                    </Link>
+                    {/*<Link href="/">*/}
+                    <a href="#" className="navbar-brand" onClick={() => {
+                        return router.push('/home')
+                    }}>Home</a>
+                    {/*</Link>*/}
                     <div>
                         {menu}
                     </div>

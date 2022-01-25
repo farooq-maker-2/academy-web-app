@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import TeacherListItem from "../lists/TeacherListItem";
+import TeacherListItem from "./lists/TeacherListItem";
 
 
 const handleChange = (event, setTeacherName) => {
@@ -25,24 +25,6 @@ function SearchTeacher(props) {
     const [teachers, setTeachers] = useState([]);
     const [teachersList, setTeachersList] = useState([]);
     const [teacherName, setTeacherName] = useState(0);
-
-
-    // updateAndFetch = async (courses, updatedIndex) => {
-    //     const updatedState = {
-    //         courses: courses,
-    //         pageIndex: updatedIndex
-    //     }
-    //
-    //     await this.setState(updatedState)
-    //     return this.getAllCourses().then(res => {
-    //         this.setState({
-    //             courses: res.data.content
-    //         })
-    //     }).catch(err => {
-    //         console.log(err);
-    //     });
-    //     ;
-    // }
 
     useEffect(() => {
         setTeachersList(<strong>No Teachers Found !!!</strong>);

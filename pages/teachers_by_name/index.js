@@ -1,5 +1,5 @@
 import React from "react";
-import SearchTeacher from "../../components/home/SearchTeacher";
+import SearchTeacher from "../../components/SearchTeacher";
 
 export default function SearchTeachers() {
 

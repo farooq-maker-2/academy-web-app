@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {loginUser} from '../../lib/auth';
+import {loginUser} from '../../lib/lib';
 import styles from './LoginForm.module.css'
 
 const handleSubmit = async (email, password, router) => {
@@ -9,7 +9,6 @@ const handleSubmit = async (email, password, router) => {
 }
 
 function LoginForm(props) {
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -53,7 +52,6 @@ function LoginForm(props) {
                     <h1 className="col-lg-12 login-title text-uppercase">
                         Please sign in
                     </h1>
-
                     <div className="col-lg-12 login-form">
                         <div className="col-lg-12 login-form">
                             <form onSubmit={() => handleSubmit(email, password, props.router)}>
@@ -76,7 +74,6 @@ function LoginForm(props) {
                                            size="30"
                                            onChange={() => setPassword(event.target.value)}/>
                                 </div>
-
                                 <div className="col-lg-12 loginbttm position-relative" type="submit">
                                     <div className="col-lg-6 login-btm login-button">
                                         <button type="submit" className="btn btn-primary position-absolute w-100">

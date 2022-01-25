@@ -16,12 +16,10 @@ const getCourseContents = async (courseId) => {
     }
 };
 
-
 function StudentCourseDetails(props) {
 
     const [contents, setContents] = useState([]);
     const [courseId, setCourseId] = useState(0);
-
 
     useEffect(() => {
         getCourseContents(props.courseId).then(res => {
@@ -34,7 +32,6 @@ function StudentCourseDetails(props) {
         }).catch(err => console.log("Error ", err));
 
     }, [courseId]);
-
 
     let contentList;
     if (contents && contents.length > 0) {

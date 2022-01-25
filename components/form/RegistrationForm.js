@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {RegisterUser} from '../../lib/auth';
+import {RegisterUser} from '../../lib/lib';
 
 const handleSubmit = async (setRole, router, state) => {
     let select = document.getElementById('role');
@@ -83,7 +83,6 @@ function RegistrationForm(props) {
                     <h1 className="col-lg-12 login-title text-uppercase">
                         Please register
                     </h1>
-
                     <div className="col-lg-12 login-form">
                         <div className="col-lg-12 login-form">
                             <form onSubmit={() => handleSubmit(setRole, props.router, {
@@ -128,7 +127,6 @@ function RegistrationForm(props) {
                                            size="30"
                                            onChange={() => setPassword(event.target.value)}/>
                                 </div>
-
                                 <div className="form-group mb-3">
                                     <label className="form-control-label">Role</label>
                                     <select id="role" name="role"
@@ -154,7 +152,6 @@ function RegistrationForm(props) {
             </div>
         </div>
         // </form>
-
     );
 }
 

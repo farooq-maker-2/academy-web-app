@@ -12,7 +12,6 @@ function TeacherCourseContentListItem(props) {
     return (
         <Fragment>
             <div className="border rounded position-relative">
-                {/*<a1 href="#" className="mb-1 position-relative text-lg-start">{this.props.content.fileName}</a1>*/}
                 <span className="mb-1 position-relative">{content.fileName}</span>
             </div>
             <br/>

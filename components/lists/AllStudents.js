@@ -3,19 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import StudentListItem from "./StudentListItem";
 import Pagination from "../pagination/Pagination";
-
-const getAllStudents = async (pageIndex) => {
-
-    console.log('inside getAllStudents')
-    return axios.get('http://localhost:8081/api/students', {
-        params: {
-            page: pageIndex
-        },
-        headers: {
-            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-        }
-    });
-};
+import {getAllStudents} from "../../lib/lib";
 
 function AllStudents() {
 
@@ -25,6 +13,9 @@ function AllStudents() {
     useEffect(() => {
         getAllStudents(pageIndex).then(res => {
             setStudents(res.data.content)
+            if (res.data.content.length === 0 && pageIndex > 0) {
+                setPageIndex(pageIndex - 1);
+            }
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);
 

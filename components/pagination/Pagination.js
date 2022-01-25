@@ -11,7 +11,9 @@ function Pagination(props) {
                 }}>Previous
         </button>
         <button className="btn btn-primary"
-                onClick={() => props.setPageIndex(props.pageIndex + 1)}>Next Page
+                onClick={() => {
+                    props.setPageIndex(props.pageIndex + 1)
+                }}>Next Page
         </button>
     </div>);
 

@@ -1,8 +1,10 @@
 import React from "react";
 
-function TeacherHome() {
+export default function AdminHome() {
+
     return (
         <div className="text-center">
+            <h1>Admin Home</h1>
             <div data-purpose="billboard"
                  className="billboard-banner--billboard--3GBV3 billboard-banner--is-desktop--1A0jQ">
                 <div className="billboard-banner--content-box--2LhRB">
@@ -19,5 +21,3 @@ function TeacherHome() {
         </div>
     );
 }
-
-export default TeacherHome;

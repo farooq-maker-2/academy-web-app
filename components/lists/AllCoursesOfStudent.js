@@ -3,25 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import StudentCourseCard from "../cards/StudentCourseCard";
 import Pagination from "../pagination/Pagination";
-
-const getEnrolledCoursesOfStudent = async (studentId, pageIndex) => {
-    console.log('inside Enrolled Courses Of Student Component')
-    //when student is logged in
-    let userId = studentId;
-    //when admin is logged in
-    if (!userId) {
-        userId = Cookies.get('userId')
-    }
-    return axios.get(`http://localhost:8081/api/students/${userId}/courses`,
-        {
-            params: {
-                page: pageIndex
-            },
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-            }
-        });
-}
+import {getEnrolledCoursesOfStudent} from "../../lib/lib";
 
 const optOutHandler = async (studentId, courseId, courses, setCourses) => {
 
@@ -44,11 +26,9 @@ const optOutHandler = async (studentId, courseId, courses, setCourses) => {
             setCourses(courses.filter(course => {
                 return course.id !== courseId
             }));
-
         } else {
             console.log("failed to opt out!!!")
         }
-
     } catch (err) {
         console.log(err);
     }
@@ -63,7 +43,12 @@ function AllCoursesOfStudent(props) {
         getEnrolledCoursesOfStudent(props.studentId, pageIndex).then(res => {
             if (res && res.status === 200) {
                 console.log("success")
+                console.log(typeof res.data)
+                console.log(res.data)
                 setCourses(res.data)
+                if (res.data.length === 0 && pageIndex > 0) {
+                    setPageIndex(pageIndex - 1);
+                }
             } else {
                 console.log("failure")
             }
@@ -88,8 +73,7 @@ function AllCoursesOfStudent(props) {
 
     return (
         <div className="text-center">
-            <h1>Your Courses</h1>
-
+            <h1>All Courses Of Student</h1>
             <div>
                 <ul className="list-group list-group-flush">
                     {coursesList}
@@ -97,7 +81,6 @@ function AllCoursesOfStudent(props) {
             </div>
             <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
-
 }
 
 export default AllCoursesOfStudent;

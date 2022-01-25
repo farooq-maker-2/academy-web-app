@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {withRouter} from "next/router";
 import TeacherCourseContentListItem from "./lists/TeacherCourseContentListItem";
-import {router} from "next/client";
+import {useRouter} from "next/router";
+import {fileSelectedHandler} from "../lib/lib";
 
 const getCourseContents = async (courseId) => {
     if (courseId && courseId !== null) {
@@ -17,44 +17,23 @@ const getCourseContents = async (courseId) => {
     }
 };
 
-const handleSubmit = async (file, courseId, userId) => {
+const handleSubmit = async (file, courseId, userId, router) => {
     event.preventDefault();
     console.log('Inside upload content function')
     try {
         const data = new FormData()
         const userId = Cookies.get("userId");
         data.append('file', file);
-
-        if (file !== null) {
-            console.log("file exists!!!")
-        }
-        return await axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`,
+        return axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`,
             data, {
                 headers: {
                     AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
                     'content-type': 'multipart/form-data'
                 }
-            }).then(res => {
-            if (res && res.status === 200) {
-                console.log(res.status)
-                router.push({
-                    pathname: '/all_courses_of_teacher',
-                    query: {teacherId: userId}
-                });
-            } else {
-                console.log("failed to upload file!!!")
-            }
-        }).catch(err => console.log("Error ", err))
-
+            });
     } catch (err) {
         console.log(err);
     }
-    await router.push('/teacher_home');
-
-}
-
-const fileSelectedHandler = (event, setFile) => {
-    setFile(event.target.files[0])
 }
 
 function TeacherCourseDetails(props) {
@@ -62,7 +41,7 @@ function TeacherCourseDetails(props) {
     const [contents, setContents] = useState([]);
     const [courseId, setCourseId] = useState(-1);
     const [file, setFile] = useState(null);
-    //const file = useRef(null)
+    const router = useRouter();
 
     useEffect(() => {
         getCourseContents(props.courseId).then(res => {
@@ -96,7 +75,14 @@ function TeacherCourseDetails(props) {
                         {contentList}
                     </ul>
                 </div>
-                <form onSubmit={() => handleSubmit(file, courseId)}>
+                <form onSubmit={() => handleSubmit(file, courseId).then(res => {
+                    if (res && res.status === 200) {
+                        return router.push({
+                            pathname: '/all_courses_of_teacher',
+                            query: {teacherId: Cookies.get("userId")}
+                        });
+                    }
+                })}>
 
                     {/*If you pass a ref object to React with <div ref={myRef} />,
                      React will set its .current property to the corresponding DOM
@@ -121,4 +107,4 @@ function TeacherCourseDetails(props) {
     )
 }
 
-export default withRouter(TeacherCourseDetails);
+export default TeacherCourseDetails;

@@ -3,10 +3,8 @@ import React, {useState} from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {withRouter} from "next/router";
+import {fileSelectedHandler} from "../../lib/lib";
 
-const fileSelectedHandler = (event, setFile) => {
-    setFile(event.target.files[0])
-}
 
 const handleSubmit = async (course, file, router, teacherId) => {
 
@@ -102,7 +100,6 @@ function AddCourseForm(props) {
         //     <button className="btn btn-lg btn-primary" type="submit">Upload Course</button>
         // </form>
 
-
         <div className="container">
             <div className="row ">
                 <div className="col-lg-3 col-md-2"></div>
@@ -113,7 +110,6 @@ function AddCourseForm(props) {
                     <h1 className="col-lg-12 login-title text-uppercase">
                         Upload Course
                     </h1>
-
                     <div className="col-lg-12 login-form">
                         <div className="col-lg-12 login-form">
                             <form onSubmit={() => handleSubmit(
@@ -139,7 +135,6 @@ function AddCourseForm(props) {
                                            placeholder="Description"
                                            required
                                            onChange={() => setDescription(event.target.value)}
-
                                     /></div>
                                 <div className="form-group mb-3">
                                     <label className="form-control-label text-uppercase">Difficulty LEVEL</label>
@@ -149,8 +144,7 @@ function AddCourseForm(props) {
                                            placeholder="e.g. 403"
                                            required
                                            onChange={() => setLevel(event.target.value)}
-                                    />
-                                </div>
+                                    /></div>
                                 <div className="form-group mb-3">
                                     <label className="form-control-label text-uppercase">Course Outline</label>
                                     <input className="form-control"
@@ -159,8 +153,7 @@ function AddCourseForm(props) {
                                            placeholder="file"
                                            required
                                            onChange={(event) => fileSelectedHandler(event, setFile)}
-                                    />
-                                </div>
+                                    /></div>
                                 <div className="col-lg-12 loginbttm position-relative" type="submit">
                                     <div className="col-lg-6 login-btm login-button">
                                         <button type="submit" className="btn btn-primary position-absolute w-100">
@@ -175,8 +168,6 @@ function AddCourseForm(props) {
                 </div>
             </div>
         </div>
-
-
     );
 }
 

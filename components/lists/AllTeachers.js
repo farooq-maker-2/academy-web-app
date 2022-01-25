@@ -1,19 +1,7 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 import TeacherListItem from "./TeacherListItem";
 import Pagination from "../pagination/Pagination";
-
-const getAllTeachers = async (pageIndex) => {
-    return axios.get('http://localhost:8081/api/teachers', {
-        params: {
-            page: pageIndex
-        },
-        headers: {
-            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-        }
-    });
-};
+import {getAllTeachers} from "../../lib/lib";
 
 function AllTeachers() {
 
@@ -23,6 +11,9 @@ function AllTeachers() {
     useEffect(() => {
         getAllTeachers(pageIndex).then(res => {
             setTeachers(res.data.content)
+            if (res.data.content.length === 0 && pageIndex > 0) {
+                setPageIndex(pageIndex - 1);
+            }
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);
 
@@ -31,7 +22,7 @@ function AllTeachers() {
     ));
 
     return (
-        <div>
+        <div className="text-center">
             <h1>All Teachers</h1>
             <div>
                 <ul className="list-group list-group-flush">
