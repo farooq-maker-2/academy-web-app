@@ -1,20 +1,6 @@
 import React, {useEffect, useState} from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
-import StudentCourseContentItem from "./lists/StudentCourseContentItem";
-
-const getCourseContents = async (courseId) => {
-
-    if (courseId && courseId !== null) {
-        return await axios.get(`http://localhost:8081/api/courses/${courseId}/contents`, {
-            headers: {
-                AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-            }
-        });
-    } else {
-        console.log("failed to fetch course content");
-    }
-};
+import StudentCourseContentItem from "../../components/lists/StudentCourseContentItem";
+import {getCourseContents} from "../../lib/lib";
 
 function StudentCourseDetails(props) {
 

@@ -4,8 +4,7 @@ import {deactivateUser} from "../../lib/lib";
 import {withRouter} from "next/router";
 
 const getAllCoursesOfTeacher = async (teacherId, router) => {
-
-    await router.push({
+    return router.push({
         pathname: '/all_courses_of_teacher',
         query: {teacherId: teacherId}
     })

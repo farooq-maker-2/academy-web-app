@@ -1,5 +1,4 @@
 import React from "react";
-//import {router} from "next/client";
 import Cookies from "js-cookie";
 import {withRouter} from "next/router";
 

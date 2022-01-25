@@ -20,7 +20,7 @@ const handleSearch = async (teacherName, setTeachers) => {
     }).catch(err => console.log("Error ", err));
 };
 
-function SearchTeacher(props) {
+function SearchTeacher() {
 
     const [teachers, setTeachers] = useState([]);
     const [teachersList, setTeachersList] = useState([]);

@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
+import CourseCard from "../cards/CourseCard";
+import Pagination from "../pagination/Pagination";
 
-export default function AdminHome() {
-
+const AdminHome = () => {
     return (
         <div className="text-center">
             <h1>Admin Home</h1>
@@ -21,3 +22,5 @@ export default function AdminHome() {
         </div>
     );
 }
+
+export default AdminHome;

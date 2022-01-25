@@ -3,18 +3,10 @@ import Cookies from "js-cookie";
 import {enrollStudentToCourse} from "../../lib/lib";
 import {useRouter} from "next/router";
 
-const getCourseDetails = async (courseId, router) => {
-    return router.push({
-        pathname: '/course_details',
-        query: {courseId: courseId}
-    })
-};
-
 function CourseCard(props) {
     const [course, setCourse] = useState({});
     const [enrolled, setEnrolled] = useState(false);
     const router = useRouter();
-
 
     useEffect(() => {
         setCourse(props.course)
@@ -23,7 +15,12 @@ function CourseCard(props) {
     let controls;
     if (Cookies.get('access_token') && Cookies.get('role') === 'teacher') {
         controls = (
-            <button className="btn btn-primary" onClick={() => getCourseDetails(course.id, router)}>View & Add
+            <button className="btn btn-primary" onClick={() => {
+                return router.push({
+                    pathname: '/course_details',
+                    query: {courseId: course.id}
+                })
+            }}>View & Add
                 Contents</button>)
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'admin') {
         controls = (

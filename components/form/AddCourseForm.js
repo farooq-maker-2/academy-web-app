@@ -1,10 +1,8 @@
-//import Cookies from 'js-cookie';
 import React, {useState} from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {fileSelectedHandler} from "../../lib/lib";
-
 
 const handleSubmit = async (course, file, router, teacherId) => {
 

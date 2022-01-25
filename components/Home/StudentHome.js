@@ -1,14 +1,13 @@
-import React, {useEffect, useState} from "react";
-import CourseCard from "../../components/cards/CourseCard";
-import Pagination from "../../components/pagination/Pagination";
-import {getAllCourses} from "../../lib/lib";
+import React, {useState} from "react";
+import CourseCard from "../cards/CourseCard";
+import Pagination from "../pagination/Pagination";
 
-const HomeStudent = (props) => {
+const StudentHome = (props) => {
     console.log('props')
     console.log(props)
     const [courses, setCourses] = useState(props.courses);
     const [pageIndex, setPageIndex] = useState(0);
-    //
+
     // useEffect(() => {
     //     getAllCourses(pageIndex).then(res => {
     //         if (res && res.status === 200) {
@@ -52,17 +51,4 @@ const HomeStudent = (props) => {
     );
 }
 
-export const getServerSideProps = async (context) => {
-    console.log('inside getServerSideProps');
-    let courses = await getAllCourses(0).then(res => {
-        return res.data.content
-    }).catch(err => console.log("Error ", err));
-
-    return {
-        props: {
-            courses: courses,
-        }
-    }
-}
-
-export default HomeStudent;
+export default StudentHome;

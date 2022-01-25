@@ -1,7 +1,7 @@
-import StudentCourseDetails from "../../components/StudentCourseDetails";
-import TeacherCourseDetails from "../../components/TeacherCourseDetails";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
+import StudentCourseDetails from "./student_course_details";
+import TeacherCourseDetails from "./teacher_course_details";
 
 function Details() {
 
