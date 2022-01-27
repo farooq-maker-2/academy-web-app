@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import {publicRuntimeConfig} from "../../next.config";
 
 const downloadContent = async (courseId, content) => {
     console.log('Inside Download Content function')
     try {
         const contentName = content.fileName;
-        await axios.get(`http://localhost:8081/api/courses/${courseId}/contents/${contentName}`, {
+        await axios.get(publicRuntimeConfig.serverBaseUrl + `/api/courses/${courseId}/contents/${contentName}`, {
             responseType: 'blob',
             headers: {
                 AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')

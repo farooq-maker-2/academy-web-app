@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 import TeacherCourseContentListItem from "../../components/lists/TeacherCourseContentListItem";
 import {fileSelectedHandler, getCourseContents} from "../../lib/lib";
+import {publicRuntimeConfig} from "../../next.config";
 
 const handleSubmit = async (file, courseId, userId, router) => {
     event.preventDefault();
@@ -12,7 +13,7 @@ const handleSubmit = async (file, courseId, userId, router) => {
         const data = new FormData()
         const userId = Cookies.get("userId");
         data.append('file', file);
-        return axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`,
+        return axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses/${courseId}/contents`,
             data, {
                 headers: {
                     AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),

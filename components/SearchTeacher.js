@@ -2,14 +2,14 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 import TeacherListItem from "./lists/TeacherListItem";
-
+import {publicRuntimeConfig} from "../next.config";
 
 const handleChange = (event, setTeacherName) => {
     setTeacherName(event.target.value);
 }
 
 const handleSearch = async (teacherName, setTeachers) => {
-    await axios.get(`http://localhost:8081/api/teachers/${teacherName}`, {
+    await axios.get(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${teacherName}`, {
         headers: {
             AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
         }

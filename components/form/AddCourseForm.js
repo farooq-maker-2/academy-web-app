@@ -3,13 +3,15 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import {withRouter} from "next/router";
 import {fileSelectedHandler} from "../../lib/lib";
+import {publicRuntimeConfig} from "../../next.config";
 
 const handleSubmit = async (course, file, router, teacherId) => {
 
     event.preventDefault();
     try {
+
         const userId = Cookies.get('userId');
-        const res = await axios.post(`http://localhost:8081/api/teachers/${userId}/courses`, course, {
+        const res = await axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses`, course, {
             headers: {
                 AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
             }
@@ -24,7 +26,7 @@ const handleSubmit = async (course, file, router, teacherId) => {
             const data = new FormData()
             data.append('file', file);
 
-            await axios.post(`http://localhost:8081/api/teachers/${userId}/courses/${courseId}/contents`, data, {
+            await axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses/${courseId}/contents`, data, {
                 headers: {
                     AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
                     'content-type': 'multipart/form-data'
