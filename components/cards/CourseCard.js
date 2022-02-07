@@ -14,13 +14,17 @@ function CourseCard(props) {
 
     let controls;
     if (Cookies.get('access_token') && Cookies.get('role') === 'teacher') {
-        controls = (
-            <button className="btn btn-primary" onClick={() => {
-                return router.push({
-                    pathname: '/course_details',
-                    query: {courseId: course.id}
-                })
-            }}>View & Add Contents</button>)
+        if (!props.disable) {
+            if (props.action !== '') {
+                controls = (
+                    <button className="btn btn-primary" onClick={() => {
+                        return router.push({
+                            pathname: '/course_details',
+                            query: {courseId: course.id}
+                        })
+                    }}>{props.action}</button>)
+            }
+        }
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'admin') {
         controls = (
             <button className="btn btn-primary"
@@ -35,7 +39,7 @@ function CourseCard(props) {
                             setEnrolled(true);
                         }
                     })}
-                    disabled={enrolled}>Enroll This Course</button>)
+                    disabled={enrolled}>{props.action}</button>)
     }
 
     return (

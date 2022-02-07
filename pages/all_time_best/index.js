@@ -21,12 +21,15 @@ export default function AllTime() {
     if (courses.length == 0) {
         coursesList = <label>loading...</label>
     } else {
-        coursesList = courses?.map((course) => (<CourseCard key={course.id} course={course}/>));
+        coursesList = courses?.map((course) => (<CourseCard key={course.id}
+                                                            course={course}
+                                                            action={'enroll this course'}
+                                                            disable={true}/>));
     }
 
     return (
         <div className="text-center">
-            <h1>All Time Best Courses</h1>
+            <h1 className="title">All Time Best Courses</h1>
             <div>
                 <ul className="list-group list-group-flush">
                     {coursesList}

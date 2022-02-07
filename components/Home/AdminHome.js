@@ -1,11 +1,9 @@
-import React, {useState} from "react";
-import CourseCard from "../cards/CourseCard";
-import Pagination from "../pagination/Pagination";
+import React from "react";
 
 const AdminHome = () => {
     return (
         <div className="text-center">
-            <h1>Admin Home</h1>
+            <h1 className="title">Admin Home</h1>
             <div data-purpose="billboard"
                  className="billboard-banner--billboard--3GBV3 billboard-banner--is-desktop--1A0jQ">
                 <div className="billboard-banner--content-box--2LhRB">

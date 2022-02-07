@@ -5,7 +5,7 @@ import Pagination from "../pagination/Pagination";
 const TeacherHome = () => {
     return (
         <div className="text-center">
-            <h1>Teacher Home</h1>
+            <h1 className="title">Teacher Home</h1>
             <div data-purpose="billboard"
                  className="billboard-banner--billboard--3GBV3 billboard-banner--is-desktop--1A0jQ">
                 <div className="billboard-banner--content-box--2LhRB">

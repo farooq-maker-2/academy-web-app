@@ -19,7 +19,7 @@ function StudentListItem(props) {
 
     return (
         <div className="border rounded position-relative text-center">
-            <h1 className="mb-1 position-relative ">{student.firstName} {student.lastName}</h1>
+            <h1 className="mb-1 position-relative ">{student.lastName}</h1>
             <button className="btn btn-primary" onClick={() => getAllCoursesOfStudent(student.id, props.router)}> View
                 Courses
             </button>

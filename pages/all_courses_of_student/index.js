@@ -40,13 +40,29 @@ function AllCoursesOfStudent(props) {
 
     return (
         <div className="text-center">
-            <h1>All Courses Of Student</h1>
+            <h1 className="title">All Courses Of Student</h1>
             <div>
                 <ul className="list-group list-group-flush">
                     {coursesList}
                 </ul>
             </div>
             <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
+            {/*<footer className="bg-dark text-center text-lg-start top-100">*/}
+            {/*    <div className="text-center p-3">*/}
+            {/*        <button className="btn btn-primary"*/}
+            {/*                onClick={() => {*/}
+            {/*                    if (pageIndex > 0) {*/}
+            {/*                        setPageIndex(pageIndex - 1)*/}
+            {/*                    }*/}
+            {/*                }}>Previous*/}
+            {/*        </button>*/}
+            {/*        <button className="btn btn-primary"*/}
+            {/*                onClick={() => {*/}
+            {/*                    setPageIndex(pageIndex + 1)*/}
+            {/*                }}>Next Page*/}
+            {/*        </button>*/}
+            {/*    </div>*/}
+            {/*</footer>*/}
         </div>);
 }
 

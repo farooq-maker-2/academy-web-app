@@ -23,7 +23,7 @@ export default function AllStudents() {
 
     return (
         <div>
-            <h1>All Students</h1>
+            <h1 className="text-center title">All Students</h1>
             <div>
                 <ul className="list-group list-group-flush">
                     {studentsList}

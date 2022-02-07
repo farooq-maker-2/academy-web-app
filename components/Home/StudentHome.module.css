@@ -1,0 +1,12 @@
+.left-align {
+    width: 50%;
+    height: 100px;
+    float: left;
+}
+
+.right-align {
+    margin-left: 50%;
+    height: 100px;
+    background: blue;
+}
+

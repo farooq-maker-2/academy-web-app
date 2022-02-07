@@ -57,7 +57,7 @@ function TeacherCourseDetails(props) {
 
     return (
         <div href="#" className="border rounded text-uppercase text-center">
-            <h1 className="text-xl mb-1">Course Contents</h1>
+            <h1 className="text-xl mb-1 title">Course Contents</h1>
             <div>
                 <div>
                     <ul className="list-group list-group-flush">

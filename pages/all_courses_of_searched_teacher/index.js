@@ -6,7 +6,7 @@ import {getAllCoursesOfTeacher} from "../../lib/lib";
 import Cookies from "js-cookie";
 import SearchTeacher from "../../components/SearchTeacher";
 
-function AllCoursesOFTeacher(props) {
+function AllCoursesOFSearchedTeacher(props) {
 
     const teacherId = props.router.query.teacherId;
     const [courses, setCourses] = useState([]);
@@ -37,7 +37,7 @@ function AllCoursesOFTeacher(props) {
     if(Cookies.get('role') === 'student'){
         action= 'Enroll this Course';
     }else{
-        action= 'View & Add Content';
+        action= '';
     }
     if (courses && courses.length > 0) {
         coursesList = courses?.map((course) => (
@@ -58,7 +58,7 @@ function AllCoursesOFTeacher(props) {
     return (
         <div className="text-uppercase text-center">
             <SearchTeacher/>
-            <h1 className="title">All Courses Of Teacher</h1>
+            <h1 className="title">All Courses Of Searched Teacher</h1>
             <div>
                 <ul className="list-group list-group-flush">
                     {coursesList}
@@ -69,4 +69,4 @@ function AllCoursesOFTeacher(props) {
 
 }
 
-export default withRouter(AllCoursesOFTeacher)
+export default withRouter(AllCoursesOFSearchedTeacher)

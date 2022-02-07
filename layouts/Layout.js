@@ -3,7 +3,8 @@ import Head from "next/head";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
-import {deactivateUser} from "../lib/lib";
+import {deactivateUser, getAllCourses} from "../lib/lib";
+import classes from './Layout.module.css'
 
 //
 // About hyperlinks:
@@ -25,25 +26,6 @@ import {deactivateUser} from "../lib/lib";
 
 const Layout = (props) => {
     const router = useRouter();
-
-    const showAllTimeTopCourses = async () => {
-        return router.push('/all_time_best');
-    }
-
-    const showAllCoursesOfStudent = async (studentId) => {
-        return router.push({
-            pathname: '/all_courses_of_student',
-            query: {studentId: studentId}
-        });
-    }
-
-    const searchTeachers = async () => {
-        return router.push('/teachers_by_name');
-    }
-
-    const showTrendingCourses = async () => {
-        return router.push('/top_trending');
-    }
 
     const logout = async () => {
         let c = document.cookie.split("; ");
@@ -69,10 +51,6 @@ const Layout = (props) => {
         await router.push('/add_course');
     }
 
-    const getAllCoursesOfTeacher = async () => {
-        await router.push('/all_courses_of_teacher');
-    }
-
     const getAllTeachers = async () => {
         await router.push('/all_teachers');
     }
@@ -88,12 +66,12 @@ const Layout = (props) => {
             <ul className="navbar-nav">
                 <li className="nav-item">
                     <Link href="/login">
-                        <a className="nav-link active">Login</a>
+                        <a className="nav-link active nav-item-text">Login</a>
                     </Link>
                 </li>
                 <li className="nav-item">
                     <Link href="/register">
-                        <a className="nav-link active">Register</a>
+                        <a className="nav-link active nav-item-text">Register</a>
                     </Link>
                 </li>
             </ul>
@@ -103,66 +81,56 @@ const Layout = (props) => {
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={searchTeachers}>Search Teacher</a>
+                    <a href="#" className="nav-link active nav-item-text"
+                        onClick={() => {
+                           router.push('all_courses')
+                       }}>Available Courses</a>
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active"
-                       onClick={() => showAllCoursesOfStudent(Cookies.get('userId'))}>Your Courses</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={showAllTimeTopCourses}>All Time Best</a>
-                </li>
-
-                <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={showTrendingCourses}>Trending Courses</a>
-                </li>
-
-                <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={deactivate}>Deactivate</a>
-                </li>
-
-                <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={logout}>Logout</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={logout}>Logout</a>
                 </li>
             </ul>
         )
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'teacher') {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={getAllCoursesOfTeacher}>Your Courses</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={addCourse}>Upload Course</a>
                 </li>
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={addCourse}>Upload New Course</a>
+                    <a href="#" className="nav-link active nav-item-text"
+                       onClick={() => {
+                           router.push('all_courses')
+                       }}>Courses</a>
                 </li>
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={deactivate}>Deactivate</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
                 </li>
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={logout}>Logout</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={logout}>Logout</a>
                 </li>
             </ul>
         )
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'admin') {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={getAllStudents}>All Students</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={getAllStudents}>
+                        All Students
+                    </a>
                 </li>
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={getAllTeachers}>All Teachers</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={getAllTeachers}>
+                        All Teachers
+                    </a>
                 </li>
-
                 <li className="nav-item">
-                    <a href="#" className="nav-link active" onClick={logout}>Logout</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={logout}>Logout</a>
                 </li>
             </ul>
         )
@@ -177,15 +145,13 @@ const Layout = (props) => {
                       crossOrigin="anonymous"/>
             </Head>
 
-            <nav className="navbar navbar-expand-md bg-dark mb-4"
+            <nav className="navbar navbar-expand-sm bg-dark mb-0"
                  styles="background-color: #1884b5">
                 <div className="container-fluid">
-                    {/*<Link href="/">*/}
-                    <a href="#" className="navbar-brand" onClick={() => {
+                    <a href="#" className="navbar-brand nav-item-text" onClick={() => {
                         return router.push('/home')
                     }}>Home</a>
-                    {/*</Link>*/}
-                    <div>
+                    <div className="navbar-brand">
                         {menu}
                     </div>
                 </div>
