@@ -10,9 +10,13 @@ export default function AllStudents() {
 
     useEffect(() => {
         getAllStudents(pageIndex).then(res => {
-            setStudents(res.data.content)
-            if (res.data.content.length === 0 && pageIndex > 0) {
-                setPageIndex(pageIndex - 1);
+            if (res.data.success && res.data.success === true) {
+                if (res.data.data.content.length !== 0 && pageIndex > -1) {
+                    setStudents(res.data.data.content)
+                    setPageIndex(pageIndex + 1);
+                }
+            } else {
+                window.alert("failed to fetch students")
             }
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);

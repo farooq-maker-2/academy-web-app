@@ -35,11 +35,13 @@ function CourseCard(props) {
         controls = (
             <button className="btn btn-success"
                     onClick={() => enrollStudentToCourse(course.id).then(res => {
-                        if (res.status === 200) {
+                        if (res.data.success && res.data.success === true) {
                             setEnrolled(true);
+                        } else {
+                            window.alert("failed to enroll")
                         }
                     })}
-                    disabled={enrolled}>{props.action}</button>)
+                    disabled={enrolled}>{'enroll this course'}</button>)
     }
 
     return (

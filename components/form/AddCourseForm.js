@@ -11,37 +11,37 @@ const handleSubmit = async (course, file, router, teacherId) => {
     try {
 
         const userId = Cookies.get('userId');
-        const res = await axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses`, course, {
+        await axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses`, course, {
             headers: {
                 AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
             }
-        });
-        const courseId = res.data.id;
-        //if course has been added successfully then save course content
-        if (res.status && res.status === 200) {
-            if (file) {
-                console.log('file exists')
+        }).then(res =>{
+            //if course has been added successfully then save course content
+            if (res && res.data.success && res.data.success === true) {
+                const userId = Cookies.get("userId");
+                const data = new FormData()
+                data.append('file', file);
+                const courseId = res.data.data.id;
+                axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses/${courseId}/contents`, data, {
+                    headers: {
+                        AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
+                        'content-type': 'multipart/form-data'
+                    }
+                }).then(res => {
+                    if (res.data.success && res.data.success === true) {
+                        window.alert('course uploaded successfully')
+                        router.push({
+                            pathname: '/all_courses_of_teacher',
+                            query: {teacherId: teacherId}
+                        })
+                    } else {
+                        window.alert('failed to upload course')
+                    }
+                }).catch(err => console.log(err));
+            } else {
+                window.alert("failed to upload course")
             }
-            const userId = Cookies.get("userId");
-            const data = new FormData()
-            data.append('file', file);
-
-            await axios.post(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${userId}/courses/${courseId}/contents`, data, {
-                headers: {
-                    AUTHORIZATION: 'Bearer ' + Cookies.get('access_token'),
-                    'content-type': 'multipart/form-data'
-                }
-            }).then(res => {
-                if (res && res.status === 200) {
-                    router.push({
-                        pathname: '/all_courses_of_teacher',
-                        query: {teacherId: teacherId}
-                    })
-                } else {
-                    console.log("failed to upload course content")
-                }
-            }).catch(err => console.log(err));
-        }
+        })
     } catch (err) {
         console.log(err);
     }

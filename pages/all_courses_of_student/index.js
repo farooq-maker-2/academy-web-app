@@ -12,13 +12,13 @@ function AllCoursesOfStudent(props) {
 
     useEffect(() => {
         getEnrolledCoursesOfStudent(studentId, pageIndex).then(res => {
-            if (res && res.status === 200) {
-                setCourses(res.data)
-                if (res.data.length === 0 && pageIndex > 0) {
+            if (res.data.success && res.data.success === true) {
+                setCourses(res.data.data)
+                if (res.data.data.length === 0 && pageIndex > 0) {
                     setPageIndex(pageIndex - 1);
                 }
             } else {
-                console.log("failure")
+                window.alert("failed to fetch list of enrolled courses")
             }
         }).catch(err => console.log("Error ", err));
 
@@ -26,11 +26,13 @@ function AllCoursesOfStudent(props) {
 
     let coursesList;
     if (courses && courses.length > 0) {
+        console.log('props.studentId');
+        console.log(props.studentId);
         coursesList = courses?.map((course) => (<div key={course.id}>
             <StudentCourseCard
                 courses={courses}
                 course={course}
-                studentId={props.studentId}
+                studentId={studentId}
                 setCourses={setCourses}
             />
         </div>));

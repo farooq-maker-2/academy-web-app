@@ -9,11 +9,10 @@ function StudentCourseDetails(props) {
 
     useEffect(() => {
         getCourseContents(props.courseId).then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
-                setContents(res.data)
+            if (res.data.success && res.data.success === true) {
+                setContents(res.data.data)
             } else {
-                console.log("failure")
+                window.alert("failed to get course contents")
             }
         }).catch(err => console.log("Error ", err));
 

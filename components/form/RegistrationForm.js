@@ -5,9 +5,10 @@ const handleSubmit = async (setRole, router, state) => {
     let select = document.getElementById('role');
     state['role'] = select.options[select.selectedIndex].text;
     RegisterUser(state).then(res => {
-        if (res && res.status === 200) {
-            console.log("user registered successfully");
+        if (res.data.success && res.data.success === true) {
             router.push('/login');
+        }else{
+            window.alert("failed to register user");
         }
     }).catch(err => console.log("Error ", err));
 }

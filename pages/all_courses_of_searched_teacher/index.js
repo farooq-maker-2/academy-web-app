@@ -11,33 +11,24 @@ function AllCoursesOFSearchedTeacher(props) {
     const teacherId = props.router.query.teacherId;
     const [courses, setCourses] = useState([]);
     const [pageIndex, setPageIndex] = useState(0);
+    const [action, setAction] = useState('');
 
     useEffect(() => {
         getAllCoursesOfTeacher(teacherId, pageIndex).then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
-                setCourses(res.data)
-                console.log(res.data)
-                if (res.data.length === 0 && pageIndex > 0) {
-                    console.log(courses)
+            if (res && res.data.success === true) {
+                setCourses(res.data.data)
+                if (res.data.data.length === 0 && pageIndex > 0) {
                     setPageIndex(pageIndex - 1);
                 }
             } else {
-                console.log("failure")
+                window.alert("failed to fetch courses of teacher")
             }
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);
 
     let coursesList;
-    // let isOwner = false;
-    // if(teacherId === Cookies.get("userId")){
-    //     isOwner = true;
-    // }
-    let action = '';
-    if(Cookies.get('role') === 'student'){
-        action= 'Enroll this Course';
-    }else{
-        action= '';
+    if (Cookies.get('role') === 'student') {
+        setAction('enroll this Course');
     }
     if (courses && courses.length > 0) {
         coursesList = courses?.map((course) => (
@@ -47,7 +38,6 @@ function AllCoursesOFSearchedTeacher(props) {
                 course={course}
                 teacherId={props.teacherId}
                 setCourses={setCourses}
-                /*own = {isOwner}*/
                 action={action}
             />
         ));

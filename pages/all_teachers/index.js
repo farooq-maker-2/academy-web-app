@@ -10,9 +10,9 @@ export default function AllTeachers() {
 
     useEffect(() => {
         getAllTeachers(pageIndex).then(res => {
-            setTeachers(res.data.content)
-            if (res.data.content.length === 0 && pageIndex > 0) {
-                setPageIndex(pageIndex - 1);
+            if (res.data.data.content.length !== 0 && pageIndex > -1) {
+                setTeachers(res.data.data.content)
+                setPageIndex(pageIndex + 1);
             }
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);

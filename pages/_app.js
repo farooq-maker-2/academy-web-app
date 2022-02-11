@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-//import classes from '../components/RegistrationForm.module.css';
+
 
 import Layout from "../layouts/Layout";
 

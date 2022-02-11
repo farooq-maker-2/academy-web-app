@@ -34,12 +34,11 @@ function TeacherCourseDetails(props) {
 
     useEffect(() => {
         getCourseContents(props.courseId).then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
+            if (res.data.success && res.data.success === true) {
                 setCourseId(props.courseId)
-                setContents(res.data)
+                setContents(res.data.data)
             } else {
-                console.log("failure")
+                window.alert("failed to get course contents")
             }
         }).catch(err => console.log("Error ", err));
 
@@ -65,27 +64,21 @@ function TeacherCourseDetails(props) {
                     </ul>
                 </div>
                 <form onSubmit={() => handleSubmit(file, courseId).then(res => {
-                    if (res && res.status === 200) {
+                    if (res.data.success && res.data.success === true) {
+                        window.alert("uploaded successfully");
                         return router.push({
                             pathname: '/all_courses_of_teacher',
                             query: {teacherId: Cookies.get("userId")}
                         });
+                    }else{
+                        window.alert("upload failed");
                     }
                 })}>
-
-                    {/*If you pass a ref object to React with <div ref={myRef} />,
-                     React will set its .current property to the corresponding DOM
-                     node whenever that node changes. Keep in mind that useRef doesn’t
-                     notify you when its content changes.
-                     Mutating the .current property doesn’t cause a re-render.
-                    */}
                     <input type="file"
                            name="file"
                            className="border rounded position-relative"
                            placeholder="file"
                            required
-                        /*ref={file}*/
-                        /*onChange={() => setFile(event.target.file)}*/
                            onChange={(event) => fileSelectedHandler(event, setFile)}/><br/>
                     <br/>
                     <button className="btn btn-lg btn-primary" type="submit">Upload</button>

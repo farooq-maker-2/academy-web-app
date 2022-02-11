@@ -8,11 +8,10 @@ export default function TrendingCourses() {
 
     useEffect(() => {
         getTrendingCourses().then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
-                setCourses(res.data)
+            if (res.data.success && res.data.success === true) {
+                setCourses(res.data.data)
             } else {
-                console.log("failure")
+                window.alert("failure")
             }
         }).catch(err => console.log("Error ", err));
 
@@ -20,7 +19,7 @@ export default function TrendingCourses() {
 
     let coursesList;
     if (courses.length == 0) {
-        coursesList = <label>loading...</label>
+        coursesList = <strong>no courses available!!!</strong>
     } else {
         coursesList = courses?.map((course) => (<CourseCard key={course.id} course={course} action={'enroll this course'} disable={true}/>));
     }

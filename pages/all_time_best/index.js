@@ -7,11 +7,10 @@ export default function AllTime() {
 
     useEffect(() => {
         getAllTimeBestCourses().then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
-                setCourses(res.data)
+            if (res.data.success && res.data.success === true) {
+                setCourses(res.data.data)
             } else {
-                console.log("failure")
+                window.alert("failed")
             }
         }).catch(err => console.log("Error ", err));
 
@@ -19,7 +18,7 @@ export default function AllTime() {
 
     let coursesList;
     if (courses.length == 0) {
-        coursesList = <label>loading...</label>
+        coursesList = <strong>no courses available!!!</strong>
     } else {
         coursesList = courses?.map((course) => (<CourseCard key={course.id}
                                                             course={course}

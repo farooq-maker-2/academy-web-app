@@ -13,27 +13,25 @@ const AllCourses = (props) => {
 
     useEffect(() => {
         getAllCourses(pageIndex).then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
-                setCourses(res.data.content)
-                if (res.data.content.length === 0 && pageIndex > 0) {
+            if (res.data.success && res.data.success === true) {
+                setCourses(res.data.data)
+                if (res.data.data.length === 0 && pageIndex > 0) {
                     setPageIndex(pageIndex - 1);
                 }
             } else {
-                console.log("failure")
+                window.alert("failed to fetch courses")
             }
         }).catch(err => console.log("Error ", err));
-
     }, [pageIndex]);
 
     let coursesList = <strong>no courses available!!!</strong>
     if (props.courses) {
         coursesList = props.courses?.map((course) => (
-            <CourseCard key={course.id} course={course} action={'enroll this course'}/>
+            <CourseCard key={course.id} course={course}/>
         ));
     } else if (courses && courses.length > 0) {
         coursesList = courses?.map((course) => (
-            <CourseCard key={course.id} course={course} action={'enroll this course'}/>
+            <CourseCard key={course.id} course={course}/>
         ))
     }
 

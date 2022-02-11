@@ -35,14 +35,15 @@ const Layout = (props) => {
     }
 
     const deactivate = async () => {
-
         deactivateUser().then(res => {
-            if (res && res.status === 200) {
+            if (res.data.success && res.data.success === true) {
                 //invalidate cookies
                 let c = document.cookie.split("; ");
                 for (let i in c)
                     document.cookie = /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 router.push('/register');
+            }else{
+                window.alert("failed to deactivate user")
             }
         });
     }

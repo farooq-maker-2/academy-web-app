@@ -16,7 +16,7 @@ const handleSearch = async (teacherName, router/*, setTeachers*/) => {
             AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
         }
     }).then(res => {
-        if (res && res.status === 200) {
+        if (res.data.success && res.data.success === true) {
             // setTeachers(res.data)
             router.push({
                 pathname: '/searched_teacher',

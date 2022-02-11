@@ -6,8 +6,6 @@ import TeacherCourseDetails from "./teacher_course_details";
 function Details() {
 
     const router = useRouter();
-    console.log('router.query.courseId')
-    console.log(router.query.courseId)
     let courseId = null;
     if (router.query.courseId) {
         courseId = router.query.courseId;

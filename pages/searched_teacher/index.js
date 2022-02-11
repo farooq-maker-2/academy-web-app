@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Cookies from "js-cookie";
-import {deactivateUser} from "../../lib/lib";
-import {useRouter, withRouter} from "next/router";
+import {useRouter} from "next/router";
 import axios from "axios";
 import {publicRuntimeConfig} from "../../next.config";
-import Pagination from "../../components/pagination/Pagination";
 import TeacherListItem from "../../components/lists/TeacherListItem";
 
 
@@ -14,8 +12,8 @@ const handleSearch = async (teacherName, setTeachers) => {
             AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
         }
     }).then(res => {
-        if (res && res.status === 200) {
-            setTeachers(res.data)
+        if (res.data.success && res.data.success === true) {
+            setTeachers(res.data.data)
         }
     }).catch(err => console.log("Error ", err));
 };

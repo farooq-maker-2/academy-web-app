@@ -14,16 +14,13 @@ function AllCoursesOFTeacher(props) {
 
     useEffect(() => {
         getAllCoursesOfTeacher(teacherId, pageIndex).then(res => {
-            if (res && res.status === 200) {
-                console.log("success")
-                setCourses(res.data)
-                console.log(res.data)
-                if (res.data.length === 0 && pageIndex > 0) {
-                    console.log(courses)
+            if (res.data.success && res.data.success === true) {
+                setCourses(res.data.data)
+                if (res.data.data.length === 0 && pageIndex > 0) {
                     setPageIndex(pageIndex - 1);
                 }
             } else {
-                console.log("failure")
+                window.alert("failed to fetch courses")
             }
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);
@@ -34,10 +31,10 @@ function AllCoursesOFTeacher(props) {
     //     isOwner = true;
     // }
     let action = '';
-    if(Cookies.get('role') === 'student'){
-        action= 'Enroll this Course';
-    }else{
-        action= 'View & Add Content';
+    if (Cookies.get('role') === 'student') {
+        action = 'Enroll this Course';
+    } else {
+        action = 'View & Add Content';
     }
     if (courses && courses.length > 0) {
         coursesList = courses?.map((course) => (
@@ -66,7 +63,6 @@ function AllCoursesOFTeacher(props) {
             </div>
             <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
-
 }
 
 export default withRouter(AllCoursesOFTeacher)
