@@ -1,9 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
-import TeacherListItem from "./lists/TeacherListItem";
 import {publicRuntimeConfig} from "../next.config";
-import Pagination from "./pagination/Pagination";
 import {useRouter} from "next/router";
 
 const handleChange = (event, setTeacherName) => {
@@ -11,19 +9,23 @@ const handleChange = (event, setTeacherName) => {
 }
 
 const handleSearch = async (teacherName, router/*, setTeachers*/) => {
-    await axios.get(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${teacherName}`, {
-        headers: {
-            AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-        }
-    }).then(res => {
-        if (res.data.success && res.data.success === true) {
+    // await axios.get(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${teacherName}`, {
+    //     params: {
+    //         page: 0,
+    //         pageSize: publicRuntimeConfig.pageSize
+    //     },
+    //     headers: {
+    //         AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
+    //     }
+    // }).then(res => {
+    //     if (res.data.success && res.data.success === true) {
             // setTeachers(res.data)
             router.push({
                 pathname: '/searched_teacher',
                 query: {teacherName: teacherName}
             })
-        }
-    }).catch(err => console.log("Error ", err));
+    //     }
+    // }).catch(err => console.log("Error ", err));
 };
 
 function SearchTeacher() {

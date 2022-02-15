@@ -14,11 +14,12 @@ function AllCoursesOFSearchedTeacher(props) {
     const [action, setAction] = useState('');
 
     useEffect(() => {
-        getAllCoursesOfTeacher(teacherId, pageIndex).then(res => {
+        getAllCoursesOfTeacher(teacherId, pageIndex)
+            .then(res => {
             if (res && res.data.success === true) {
-                setCourses(res.data.data)
-                if (res.data.data.length === 0 && pageIndex > 0) {
-                    setPageIndex(pageIndex - 1);
+                if (res.data.data.length > 0 /*&& pageIndex > -1*/) {
+                    setCourses(res.data.data)
+                    //setPageIndex(pageIndex + 1);
                 }
             } else {
                 window.alert("failed to fetch courses of teacher")
@@ -27,9 +28,9 @@ function AllCoursesOFSearchedTeacher(props) {
     }, [pageIndex]);
 
     let coursesList;
-    if (Cookies.get('role') === 'student') {
-        setAction('enroll this Course');
-    }
+    // if (Cookies.get('role') === 'student') {
+    //     setAction('enroll this Course');
+    // }
     if (courses && courses.length > 0) {
         coursesList = courses?.map((course) => (
             <CourseCard
@@ -47,7 +48,7 @@ function AllCoursesOFSearchedTeacher(props) {
 
     return (
         <div className="text-uppercase text-center">
-            <SearchTeacher/>
+            {/*<SearchTeacher/>*/}
             <h1 className="title">All Courses Of Searched Teacher</h1>
             <div>
                 <ul className="list-group list-group-flush">

@@ -66,7 +66,7 @@ function TeacherCourseDetails(props) {
                 <form onSubmit={() => handleSubmit(file, courseId).then(res => {
                     if (res.data.success && res.data.success === true) {
                         window.alert("uploaded successfully");
-                        return router.push({
+                        router.push({
                             pathname: '/all_courses_of_teacher',
                             query: {teacherId: Cookies.get("userId")}
                         });

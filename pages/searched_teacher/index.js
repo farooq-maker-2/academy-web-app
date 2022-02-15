@@ -21,22 +21,25 @@ const handleSearch = async (teacherName, setTeachers) => {
 export default function SearchedTeacher(props) {
 
     const [teachers, setTeachers] = useState([]);
-    const [teachersList, setTeachersList] = useState([]);
+    //const [teachersList, setTeachersList] = useState([]);
     const router = useRouter();
     // const [pageIndex, setPageIndex] = useState(0);
     // const [disablePagination, setDisablePagination] = useState(true);
 
     useEffect(() => {
-        setTeachersList(<strong>No Teachers Found !!!</strong>);
         console.log('router.query.teacherName')
         console.log(router.query.teacherName)
         handleSearch(router.query.teacherName, setTeachers)
-        if (teachers.length > 0) {
-            setTeachersList(teachers?.map((teacher) => (
-                <TeacherListItem key={teacher.id} teacher={teacher}/>
-            )));
-        }
-    });
+    }, []);
+
+    let teachersList;
+    if (teachers.length > 0) {
+        teachersList = (teachers?.map((teacher) => (
+            <TeacherListItem key={teacher.id} teacher={teacher}/>
+        )));
+    } else {
+        teachersList = <strong>No Teachers Found !!!</strong>;
+    }
 
     return (
         <div className="text-center">

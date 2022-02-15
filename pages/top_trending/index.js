@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {getTrendingCourses} from "../../lib/lib";
 import CourseCard from "../../components/cards/CourseCard";
+import Pagination from "../../components/pagination/Pagination";
 
 export default function TrendingCourses() {
 
     const [courses, setCourses] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
 
     useEffect(() => {
         getTrendingCourses().then(res => {
@@ -32,5 +34,7 @@ export default function TrendingCourses() {
                     {coursesList}
                 </ul>
             </div>
-        </div>);
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
+        </div>
+    );
 }

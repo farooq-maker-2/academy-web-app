@@ -4,7 +4,7 @@ import {deactivateUser} from "../../lib/lib";
 import {withRouter} from "next/router";
 
 const getAllCoursesOfTeacher = async (teacherId, router) => {
-    return router.push({
+    router.push({
         pathname: '/all_courses_of_searched_teacher',
         query: {teacherId: teacherId}
     })
@@ -26,7 +26,8 @@ function TeacherListItem(props) {
         controls = (
             <div>
                 {common}
-                <button className="btn btn-primary" onClick={() => deactivateUser(teacher.id, "teacher")}> Deactivate
+                <button className="btn btn-primary" onClick={() => deactivateUser(teacher.id, "teacher")}>
+                    Deactivate
                 </button>
             </div>);
     } else if (Cookies.get("role") && Cookies.get("role") === 'student') {

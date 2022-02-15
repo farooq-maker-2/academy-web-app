@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from "react";
 import CourseCard from "../../components/cards/CourseCard";
 import {getAllTimeBestCourses} from "../../lib/lib";
+import Pagination from "../../components/pagination/Pagination";
 
 export default function AllTime() {
+
     const [courses, setCourses] = useState([]);
+    const [pageIndex, setPageIndex] = useState(0);
 
     useEffect(() => {
         getAllTimeBestCourses().then(res => {
@@ -34,5 +37,6 @@ export default function AllTime() {
                     {coursesList}
                 </ul>
             </div>
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
         </div>);
 }

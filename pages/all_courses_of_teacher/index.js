@@ -15,9 +15,8 @@ function AllCoursesOFTeacher(props) {
     useEffect(() => {
         getAllCoursesOfTeacher(teacherId, pageIndex).then(res => {
             if (res.data.success && res.data.success === true) {
-                setCourses(res.data.data)
-                if (res.data.data.length === 0 && pageIndex > 0) {
-                    setPageIndex(pageIndex - 1);
+                if (res.data.success > 0 && res.data.success === true) {
+                    setCourses(res.data.data)
                 }
             } else {
                 window.alert("failed to fetch courses")
@@ -26,10 +25,6 @@ function AllCoursesOFTeacher(props) {
     }, [pageIndex]);
 
     let coursesList;
-    // let isOwner = false;
-    // if(teacherId === Cookies.get("userId")){
-    //     isOwner = true;
-    // }
     let action = '';
     if (Cookies.get('role') === 'student') {
         action = 'Enroll this Course';

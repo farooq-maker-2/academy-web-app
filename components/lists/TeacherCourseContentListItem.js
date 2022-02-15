@@ -10,12 +10,12 @@ function TeacherCourseContentListItem(props) {
     }, []);
 
     return (
-        <Fragment>
+        <div className="text-center">
             <div className="border rounded position-relative">
                 <span className="mb-1 position-relative">{content.fileName}</span>
             </div>
             <br/>
-        </Fragment>
+        </div>
     )
 }
 
