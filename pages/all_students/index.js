@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from "react";
 import {getAllStudents} from "../../lib/lib";
-import StudentListItem from "../../components/lists/StudentListItem";
-import Pagination from "../../components/pagination/Pagination";
+import {Table} from "antd";
+import "antd/dist/antd.css";
+import Cookies from "js-cookie";
+import AdminStudentActions from "../../components/actions/course-actions/AdminStudentActions";
 
 export default function AllStudents() {
 
     const [students, setStudents] = useState([]);
     const [pageIndex, setPageIndex] = useState(0);
+    const {Column} = Table;
 
     useEffect(() => {
         getAllStudents(pageIndex).then(res => {
@@ -21,18 +24,34 @@ export default function AllStudents() {
         }).catch(err => console.log("Error ", err));
     }, [pageIndex]);
 
-    const studentsList = students?.map((student) => (
-        <StudentListItem key={student.id} student={student}/>
-    ));
-
     return (
         <div>
-            <h1 className="text-center title">All Students</h1>
-            <div>
-                <ul className="list-group list-group-flush">
-                    {studentsList}
-                </ul>
+            <div className="block w-50 p-10 text-center center">
+                <h1 className="text-center title">All Students</h1>
+                <Table dataSource={students} rowKey="id">
+
+                    <Column align="center" title="Name" dataIndex="lastName" key="lastName"/>
+                    <Column align="center" title="Status" dataIndex="status" key="status"/>
+                    <Column
+                        align="center"
+                        title="Actions"
+                        dataIndex="actions"
+                        key="actions"
+                        render={(_, student) => {
+                            if(Cookies.get("role") === 'admin'){
+                                return <AdminStudentActions student={student}/>;
+                            }
+                        }}
+                    />
+                </Table>
             </div>
-            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
-        </div>);
+            <style jsx global>{`
+                .center {
+                    margin: auto;
+                    width: 50%;
+                    border: 3px solid green;
+                    padding: 10px;
+                }`}</style>
+        </div>
+    );
 }

@@ -55,58 +55,10 @@ function AddCourseForm(props) {
     const [file, setFile] = useState();
 
     return (
-
-        // <form className="text-center" onSubmit={this.handleSubmit}>
-        //     <h1 className="h3 mb-3 fw-normal">Upload Course</h1>
-        //
-        //     <input type="courseName"
-        //            name="courseName"
-        //            className=""
-        //            placeholder="Course Name"
-        //            required
-        //            size="30"
-        //            onChange={this.handleChange}
-        //     /><br/>
-        //
-        //     <input type="description"
-        //            name="description"
-        //            className=""
-        //            placeholder="Description"
-        //            required
-        //            size="30"
-        //            onChange={this.handleChange}
-        //     /><br/>
-        //
-        //     <input type="level"
-        //            name="level"
-        //            className=""
-        //            placeholder="Difficulty 403"
-        //            required
-        //            size="30"
-        //            onChange={this.handleChange}/><br/>
-        //
-        //     <br/>
-        //
-        //     <input type="file"
-        //            name="file"
-        //            className="border rounded position-relative"
-        //            placeholder="file"
-        //            required
-        //            size="30"
-        //            onChange={this.fileSelectedHandler}/><br/>
-        //
-        //     <br/>
-        //
-        //     <button className="btn btn-lg btn-primary" type="submit">Upload Course</button>
-        // </form>
-
         <div className="container">
             <div className="row ">
                 <div className="col-lg-3 col-md-2"></div>
                 <div className="col-lg-6 col-md-8 login-box">
-                    {/*<div className="col-lg-12 login-key">*/}
-                    {/*    <i className="fa fa-key" aria-hidden="true"></i>*/}
-                    {/*</div>*/}
                     <h1 className="col-lg-12 login-title text-uppercase">
                         Upload Course
                     </h1>

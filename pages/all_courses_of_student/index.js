@@ -1,14 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {getEnrolledCoursesOfStudent} from "../../lib/lib";
-import StudentCourseCard from "../../components/cards/StudentCourseCard";
-import Pagination from "../../components/pagination/Pagination";
 import {useRouter} from "next/router";
+import {Table} from "antd";
+import Cookies from "js-cookie";
+import StudentEnrolledCourseViewActions from "../../components/actions/course-actions/StudentEnrolledCourseViewActions";
+import AdminStudentCourseActions from "../../components/actions/course-actions/AdminStudentCourseActions";
 
 function AllCoursesOfStudent(props) {
     const router = useRouter();
     const studentId = router.query.studentId
     const [courses, setCourses] = useState([]);
     const [pageIndex, setPageIndex] = useState(0);
+    const {Column} = Table;
 
     useEffect(() => {
         getEnrolledCoursesOfStudent(studentId, pageIndex).then(res => {
@@ -24,48 +27,50 @@ function AllCoursesOfStudent(props) {
 
     }, [pageIndex]);
 
-    let coursesList;
-    if (courses && courses.length > 0) {
-        console.log('props.studentId');
-        console.log(props.studentId);
-        coursesList = courses?.map((course) => (<div key={course.id}>
-            <StudentCourseCard
-                courses={courses}
-                course={course}
-                studentId={studentId}
-                setCourses={setCourses}
-            />
-        </div>));
-    } else {
-        coursesList = <label className="mb-3">No courses found !!!</label>
-    }
+    useEffect(() => {
+    }, [courses]);
 
     return (
-        <div className="text-center">
-            <h1 className="title">All Courses Of Student</h1>
-            <div>
-                <ul className="list-group list-group-flush">
-                    {coursesList}
-                </ul>
+        <div>
+            <div className="block w-50 text-center center">
+                <h1 className="title text-uppercase">All Courses Of Student</h1>
+                <Table dataSource={courses} rowKey="id">
+
+                    <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
+                    <Column align="center" title="Description" dataIndex="description" key="description"/>
+                    <Column align="center" title="Level" dataIndex="level" key="level"/>
+                    <Column
+                        align="center"
+                        title="Actions"
+                        dataIndex="actions"
+                        key="actions"
+                        render={(_, course) => {
+                            if (Cookies.get("role") === 'admin') {
+                                return <AdminStudentCourseActions
+                                    studentId={studentId}
+                                    course={course}
+                                    courses={courses}
+                                    setCourses={setCourses}/>;
+                            } else if (Cookies.get("role") === 'student') {
+                                return <StudentEnrolledCourseViewActions
+                                    studentId={studentId}
+                                    course={course}
+                                    courses={courses}
+                                    setCourses={setCourses}/>;
+                            }
+                        }}
+                    />
+                </Table>
             </div>
-            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
-            {/*<footer className="bg-dark text-center text-lg-start top-100">*/}
-            {/*    <div className="text-center p-3">*/}
-            {/*        <button className="btn btn-primary"*/}
-            {/*                onClick={() => {*/}
-            {/*                    if (pageIndex > 0) {*/}
-            {/*                        setPageIndex(pageIndex - 1)*/}
-            {/*                    }*/}
-            {/*                }}>Previous*/}
-            {/*        </button>*/}
-            {/*        <button className="btn btn-primary"*/}
-            {/*                onClick={() => {*/}
-            {/*                    setPageIndex(pageIndex + 1)*/}
-            {/*                }}>Next Page*/}
-            {/*        </button>*/}
-            {/*    </div>*/}
-            {/*</footer>*/}
-        </div>);
+            <style jsx global>{`
+                .center {
+                    margin: auto;
+                    width: 50%;
+                    border: 3px solid green;
+                    padding: 10px;
+                }`}</style>
+        </div>
+    );
 }
 
 

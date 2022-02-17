@@ -6,10 +6,7 @@ import TeacherCourseDetails from "./teacher_course_details";
 function Details() {
 
     const router = useRouter();
-    let courseId = null;
-    if (router.query.courseId) {
-        courseId = router.query.courseId;
-    }
+    let courseId = router.query.courseId;
 
     if (Cookies.get('role') === 'teacher') {
         return <TeacherCourseDetails courseId={courseId} router={router}/>;

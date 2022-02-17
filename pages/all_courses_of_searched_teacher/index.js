@@ -1,63 +1,70 @@
 import React, {useEffect, useState} from "react";
 import {withRouter} from "next/router";
-import CourseCard from "../../components/cards/CourseCard";
-import Pagination from "../../components/pagination/Pagination";
-import {getAllCoursesOfTeacher} from "../../lib/lib";
+import {deleteCourse, enrollStudentToCourse, getAllCoursesOfTeacher, reFetchCourses} from "../../lib/lib";
 import Cookies from "js-cookie";
-import SearchTeacher from "../../components/SearchTeacher";
+import {message, Table} from "antd";
+import AdminCourseActions from "../../components/actions/course-actions/AdminCourseActions";
+import "antd/dist/antd.css";
+import StudentCourseEnrollActions from "../../components/actions/course-actions/StudentCourseEnrollActions";
+import TeacherCourseActions from "../../components/actions/course-actions/TeacherCourseActions";
 
 function AllCoursesOFSearchedTeacher(props) {
 
+    const {Column} = Table;
     const teacherId = props.router.query.teacherId;
     const [courses, setCourses] = useState([]);
     const [pageIndex, setPageIndex] = useState(0);
-    const [action, setAction] = useState('');
+
+    const handleOnDeleteCourse = async (courseId) => {
+        deleteCourse(courseId)
+            .then(() => {
+                message.success(`Course ${courseId} has been deleted`);
+                reFetchCourses(pageIndex, setCourses);
+            })
+            .catch(() => {
+                message.error("There was an error encountered while deleting.");
+            });
+    };
 
     useEffect(() => {
         getAllCoursesOfTeacher(teacherId, pageIndex)
             .then(res => {
-            if (res && res.data.success === true) {
-                if (res.data.data.length > 0 /*&& pageIndex > -1*/) {
-                    setCourses(res.data.data)
-                    //setPageIndex(pageIndex + 1);
+                if (res && res.data.success === true) {
+                    if (res.data.data.length > 0) {
+                        setCourses(res.data.data)
+                    }
+                } else {
+                    window.alert("failed to fetch courses of teacher")
                 }
-            } else {
-                window.alert("failed to fetch courses of teacher")
-            }
-        }).catch(err => console.log("Error ", err));
+            }).catch(err => console.log("Error ", err));
     }, [pageIndex]);
 
-    let coursesList;
-    // if (Cookies.get('role') === 'student') {
-    //     setAction('enroll this Course');
-    // }
-    if (courses && courses.length > 0) {
-        coursesList = courses?.map((course) => (
-            <CourseCard
-                key={course.id}
-                courses={courses}
-                course={course}
-                teacherId={props.teacherId}
-                setCourses={setCourses}
-                action={action}
-            />
-        ));
-    } else {
-        coursesList = <label className="mb-3">No courses found !!!</label>
-    }
 
     return (
-        <div className="text-uppercase text-center">
-            {/*<SearchTeacher/>*/}
-            <h1 className="title">All Courses Of Searched Teacher</h1>
-            <div>
-                <ul className="list-group list-group-flush">
-                    {coursesList}
-                </ul>
-            </div>
-            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex}/>
-        </div>);
+        <div className="w-50 text-center end-50">
+            <h1 className="title mb-4">All Courses Of Teacher</h1>
+            <Table dataSource={courses} rowKey="id">
 
+                <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
+                <Column align="center" title="Description" dataIndex="description" key="description"/>
+                <Column align="center" title="Level" dataIndex="level" key="level"/>
+                <Column
+                    align="center"
+                    title="Actions"
+                    dataIndex="actions"
+                    key="actions"
+                    render={(_, course) => {
+                        if (Cookies.get("role") === 'admin') {
+                            return <AdminCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
+                        } else if (Cookies.get("role") === 'student') {
+                            return <StudentCourseEnrollActions course={course} onEnroll={enrollStudentToCourse}/>;
+                        } else if (Cookies.get("role") === 'teacher') {
+                            return <TeacherCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
+                        }
+                    }}
+                />
+            </Table>
+        </div>)
 }
 
 export default withRouter(AllCoursesOFSearchedTeacher)

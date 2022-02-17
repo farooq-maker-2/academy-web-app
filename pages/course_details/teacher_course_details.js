@@ -2,11 +2,12 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import TeacherCourseContentListItem from "../../components/lists/TeacherCourseContentListItem";
 import {fileSelectedHandler, getCourseContents} from "../../lib/lib";
 import {publicRuntimeConfig} from "../../next.config";
+import {Table} from "antd";
+import "antd/dist/antd.css";
 
-const handleSubmit = async (file, courseId, userId, router) => {
+const handleSubmit = async (file, courseId) => {
     event.preventDefault();
     console.log('Inside upload content function')
     try {
@@ -27,42 +28,30 @@ const handleSubmit = async (file, courseId, userId, router) => {
 
 function TeacherCourseDetails(props) {
 
+    const {Column} = Table;
     const [contents, setContents] = useState([]);
-    const [courseId, setCourseId] = useState(-1);
+    const [courseId, setCourseId] = useState(props.courseId);
     const [file, setFile] = useState(null);
     const router = useRouter();
 
     useEffect(() => {
-        getCourseContents(props.courseId).then(res => {
+        console.log('props.courseId')
+        console.log(props.courseId)
+        setCourseId(props.courseId)
+        getCourseContents(courseId).then(res => {
             if (res.data.success && res.data.success === true) {
-                setCourseId(props.courseId)
                 setContents(res.data.data)
             } else {
                 window.alert("failed to get course contents")
             }
         }).catch(err => console.log("Error ", err));
 
-    }, [courseId]);
-
-
-    let contentList;
-    if (contents && contents.length > 0) {
-        contentList = contents?.map((content) => (<div key={content.id}>
-            <TeacherCourseContentListItem key={content.id} content={content} courseId={props.courseId}/>
-        </div>));
-    } else {
-        contentList = <label className="mb-3">No contents found !!!</label>
-    }
+    }, []);
 
     return (
-        <div href="#" className="border rounded text-uppercase text-center">
-            <h1 className="text-xl mb-1 title">Course Contents</h1>
-            <div>
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {contentList}
-                    </ul>
-                </div>
+        <div>
+            <div className="w-50 text-center end-50 center">
+                <h1 className="title mb-4">Course Contents</h1>
                 <form onSubmit={() => handleSubmit(file, courseId).then(res => {
                     if (res.data.success && res.data.success === true) {
                         window.alert("uploaded successfully");
@@ -70,7 +59,7 @@ function TeacherCourseDetails(props) {
                             pathname: '/all_courses_of_teacher',
                             query: {teacherId: Cookies.get("userId")}
                         });
-                    }else{
+                    } else {
                         window.alert("upload failed");
                     }
                 })}>
@@ -81,10 +70,21 @@ function TeacherCourseDetails(props) {
                            required
                            onChange={(event) => fileSelectedHandler(event, setFile)}/><br/>
                     <br/>
-                    <button className="btn btn-lg btn-primary" type="submit">Upload</button>
+                    <button className="btn btn-lg btn-success" type="submit">Upload</button>
                 </form>
+                <Table dataSource={contents} rowKey="id">
 
+                    <Column align="center" title="File Name" dataIndex="fileName" key="fileName"/>
+                    <Column align="center" title="Size" dataIndex="description" key="description"/>
+                </Table>
             </div>
+            <style jsx global>{`
+                 .center {
+                     margin: auto;
+                     width: 50%;
+                     border: 3px solid green;
+                     padding: 10px;
+                 }`}</style>
         </div>
     )
 }

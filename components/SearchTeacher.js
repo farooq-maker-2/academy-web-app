@@ -1,7 +1,4 @@
 import React, {useState} from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
-import {publicRuntimeConfig} from "../next.config";
 import {useRouter} from "next/router";
 
 const handleChange = (event, setTeacherName) => {
@@ -9,48 +6,19 @@ const handleChange = (event, setTeacherName) => {
 }
 
 const handleSearch = async (teacherName, router/*, setTeachers*/) => {
-    // await axios.get(publicRuntimeConfig.serverBaseUrl + `/api/teachers/${teacherName}`, {
-    //     params: {
-    //         page: 0,
-    //         pageSize: publicRuntimeConfig.pageSize
-    //     },
-    //     headers: {
-    //         AUTHORIZATION: 'Bearer ' + Cookies.get('access_token')
-    //     }
-    // }).then(res => {
-    //     if (res.data.success && res.data.success === true) {
-            // setTeachers(res.data)
-            router.push({
-                pathname: '/searched_teacher',
-                query: {teacherName: teacherName}
-            })
-    //     }
-    // }).catch(err => console.log("Error ", err));
+    router.push({
+        pathname: '/searched_teacher_list',
+        query: {teacherName: teacherName}
+    })
 };
 
 function SearchTeacher() {
 
-    // const [teachers, setTeachers] = useState([]);
-    // const [teachersList, setTeachersList] = useState([]);
     const [teacherName, setTeacherName] = useState('');
     const router = useRouter();
-    // const [pageIndex, setPageIndex] = useState(0);
-    // const [disablePagination, setDisablePagination] = useState(true);
-
-    // useEffect(() => {
-    //     //setTeachersList(<strong>No Teachers Found !!!</strong>);
-    //     if (teachers.length > 0) {
-    //         // setDisablePagination(false)
-    //         setTeachersList(teachers?.map((teacher) => (
-    //             <TeacherListItem key={teacher.id} teacher={teacher}/>
-    //         )));
-    //     }
-    // }, [teachers]);
-
     return (
         <div className="text-center">
             <div className="title">
-                {/*<h1 className="title">Search Teacher</h1>*/}
                 <input type="text" size={30} name="search" placeholder="search teacher"
                        onChange={(event) => handleChange(event, setTeacherName)}/>
                 <button className="w-auto btn-sm btn-secondary mb-lg-4"
@@ -59,12 +27,6 @@ function SearchTeacher() {
                     Search
                 </button>
             </div>
-            {/*<div disable="disabled">*/}
-            {/*    <ul className="list-group list-group-flush">*/}
-            {/*        {teachersList}*/}
-            {/*        <Pagination></Pagination>*/}
-            {/*    </ul>*/}
-            {/*</div>*/}
         </div>
     );
 }

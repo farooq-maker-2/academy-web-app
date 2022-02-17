@@ -3,8 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
-import {deactivateUser, getAllCourses} from "../lib/lib";
-import classes from './Layout.module.css'
+import {deactivateUser} from "../lib/lib";
 
 //
 // About hyperlinks:

@@ -1,43 +1,56 @@
 import React, {useEffect, useState} from "react";
-import StudentCourseContentItem from "../../components/lists/StudentCourseContentItem";
 import {getCourseContents} from "../../lib/lib";
+import {Table} from "antd";
+import "antd/dist/antd.css";
+import StudentCourseContentActions from "../../components/actions/course-actions/StudentCourseContentActions";
 
 function StudentCourseDetails(props) {
-
+    const {Column} = Table;
     const [contents, setContents] = useState([]);
-    const [courseId, setCourseId] = useState(0);
+    const [courseId, setCourseId] = useState(props.courseId);
 
     useEffect(() => {
+
         getCourseContents(props.courseId).then(res => {
             if (res.data.success && res.data.success === true) {
-                setContents(res.data.data)
+                console.log('contents fetched');
+                console.log(res.data.data);
+                setContents(res.data.data);
             } else {
                 window.alert("failed to get course contents")
             }
         }).catch(err => console.log("Error ", err));
 
-    }, [courseId]);
-
-    let contentList;
-    if (contents && contents.length > 0) {
-        contentList = contents?.map((content) => (<div key={content.id}>
-            <StudentCourseContentItem key={content.id} content={content} courseId={props.courseId}/>
-        </div>));
-    } else {
-        contentList = <label className="mb-3">No contents found !!!</label>
-    }
+    }, []);
 
     return (
-        <div href="#" className="border rounded text-uppercase text-center">
-            <h1 className="text-xl mb-1 title">Course Contents</h1>
-            <div>
-                <div>
-                    <ul className="list-group list-group-flush">
-                        {contentList}
-                    </ul>
-                </div>
+        <div>
+            <div className="w-50 text-center end-50 center">
+                <h1 className="title mb-4">Course Contents</h1>
+                <Table dataSource={contents} rowKey="id">
+
+                    <Column align="center" title="File Name" dataIndex="fileName" key="fileName"/>
+                    <Column align="center" title="Size" dataIndex="description" key="description"/>
+                    <Column
+                        align="center"
+                        title="Actions"
+                        dataIndex="actions"
+                        key="actions"
+                        render={(_, content) => {
+                            return <StudentCourseContentActions courseId={courseId} content={content}/>;
+                        }}
+                    />
+                </Table>
             </div>
+            <style jsx global>{`
+                .center {
+                    margin: auto;
+                    width: 50%;
+                    border: 3px solid green;
+                    padding: 10px;
+                }`}</style>
         </div>
+
     )
 }
 
