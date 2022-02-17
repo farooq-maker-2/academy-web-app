@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
-import {deactivateUser} from "../lib/lib";
+import {deactivateUser, logout, routeToAddCourse, routeToAllStudents, routeToAllTeachers} from "../lib/lib";
 
 //
 // About hyperlinks:
@@ -26,13 +26,6 @@ import {deactivateUser} from "../lib/lib";
 const Layout = (props) => {
     const router = useRouter();
 
-    const logout = async () => {
-        let c = document.cookie.split("; ");
-        for (let i in c)
-            document.cookie = /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-        await router.push('/login');
-    }
-
     const deactivate = async () => {
         deactivateUser().then(res => {
             if (res.data.success && res.data.success === true) {
@@ -41,22 +34,10 @@ const Layout = (props) => {
                 for (let i in c)
                     document.cookie = /^[^=]+/.exec(c[i])[0] + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
                 router.push('/register');
-            }else{
+            } else {
                 window.alert("failed to deactivate user")
             }
         });
-    }
-
-    const addCourse = async () => {
-        await router.push('/add_course');
-    }
-
-    const getAllTeachers = async () => {
-        await router.push('/all_teachers');
-    }
-
-    const getAllStudents = async () => {
-        await router.push('/all_students');
     }
 
     let menu;
@@ -82,7 +63,7 @@ const Layout = (props) => {
 
                 <li className="nav-item">
                     <a href="#" className="nav-link active nav-item-text"
-                        onClick={() => {
+                       onClick={() => {
                            router.push('all_courses')
                        }}>Available Courses</a>
                 </li>
@@ -100,7 +81,9 @@ const Layout = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={addCourse}>Upload Course</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={() => routeToAddCourse(router)}>
+                        Upload Course
+                    </a>
                 </li>
                 <li className="nav-item">
                     <a href="#" className="nav-link active nav-item-text"
@@ -120,12 +103,12 @@ const Layout = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={getAllStudents}>
+                    <a href="#" className="nav-link active nav-item-text" onClick={() => routeToAllStudents(router)}>
                         All Students
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={getAllTeachers}>
+                    <a href="#" className="nav-link active nav-item-text" onClick={() => routeToAllTeachers(router)}>
                         All Teachers
                     </a>
                 </li>
