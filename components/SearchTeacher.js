@@ -5,7 +5,7 @@ const handleChange = (event, setTeacherName) => {
     setTeacherName(event.target.value);
 }
 
-const handleSearch = async (teacherName, router/*, setTeachers*/) => {
+const handleSearch = async (teacherName, router) => {
     router.push({
         pathname: '/searched_teacher_list',
         query: {teacherName: teacherName}
