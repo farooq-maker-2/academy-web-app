@@ -1,19 +1,20 @@
 import {Popconfirm} from "antd";
-import {routeTOAllCoursesOfTeacher, deactivateUser} from "../../../lib/lib";
 import {useRouter} from "next/router";
+import {deactivateUser, routeToAllCoursesOfStudent} from "../../lib/lib";
 
-const AdminTeacherActions = ({teacher}) => {
+
+const AdminStudentActions = ({student}) => {
 
     const router = useRouter();
     return (
-
         <div className="policy-package-actions">
-            <a href="#" onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}> View Courses</a>
+
+            <a href="#" onClick={() => routeToAllCoursesOfStudent(student.id, router)}>View Courses</a>
             <Popconfirm
-                title={"Deactivate teacher?"}
+                title={"Deactivate Student?"}
                 okText="Yes"
                 cancelText="No"
-                onConfirm={() => deactivateUser(teacher.id, 'teacher')}
+                onConfirm={() => deactivateUser(student.id, 'student')}
             >
                 <a href="#">Deactivate</a>
             </Popconfirm>
@@ -23,16 +24,17 @@ const AdminTeacherActions = ({teacher}) => {
         .policy-package-actions * {
           padding: 8px 0;
         }
+
         .policy-package-actions a {
           margin-right: 1rem;
         }
 
         .policy-package-actions a:hover {
-          color: purple;
+          color:  purple;
         }
       `}</style>
         </div>
     );
 };
 
-export default AdminTeacherActions;
+export default AdminStudentActions;

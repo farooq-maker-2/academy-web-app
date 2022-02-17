@@ -7,9 +7,9 @@ import TeacherListItem from "../../components/lists/TeacherListItem";
 import {Table} from "antd";
 import "antd/dist/antd.css";
 import {enrollStudentToCourse} from "../../lib/lib";
-import TeacherTeacherActions from "../../components/actions/course-actions/TeacherTeacherActions";
-import StudentTeacherActions from "../../components/actions/course-actions/StudentTeacherActions";
-import AdminTeacherActions from "../../components/actions/course-actions/AdminTeacherActions";
+import TeacherTeacherActions from "../../components/actions/TeacherTeacherActions";
+import StudentTeacherActions from "../../components/actions/StudentTeacherActions";
+import AdminTeacherActions from "../../components/actions/AdminTeacherActions";
 
 
 const handleSearch = async (teacherName, setTeachers) => {

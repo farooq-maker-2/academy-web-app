@@ -1,19 +1,15 @@
-import {routeTOAllCoursesOfTeacher} from "../../../lib/lib";
-import {useRouter} from "next/router";
+import {downloadContent} from "../../lib/lib";
 
-const TeacherTeacherActions = ({teacher}) => {
+const StudentCourseContentActions = ({courseId, content}) => {
 
-    const router = useRouter();
     return (
         <div className="policy-package-actions">
-
-            <a href="#" onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}>View Courses</a>
-
+            <a href="#" onClick={() => downloadContent(courseId, content)}>Download</a><br/>
             <style jsx global>{`
-
         .policy-package-actions * {
           padding: 8px 0;
         }
+        
         .policy-package-actions a {
           margin-right: 1rem;
         }
@@ -26,4 +22,4 @@ const TeacherTeacherActions = ({teacher}) => {
     );
 };
 
-export default TeacherTeacherActions;
+export default StudentCourseContentActions;

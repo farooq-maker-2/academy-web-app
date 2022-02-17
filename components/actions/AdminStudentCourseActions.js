@@ -1,5 +1,5 @@
 import {Popconfirm} from "antd";
-import {optOutHandler} from "../../../lib/lib";
+import {optOutHandler} from "../../lib/lib";
 
 const AdminStudentCourseActions = ({studentId, course, courses, setCourses}) => {
 

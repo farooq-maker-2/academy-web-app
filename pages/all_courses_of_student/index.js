@@ -3,8 +3,8 @@ import {getEnrolledCoursesOfStudent} from "../../lib/lib";
 import {useRouter} from "next/router";
 import {Table} from "antd";
 import Cookies from "js-cookie";
-import StudentEnrolledCourseViewActions from "../../components/actions/course-actions/StudentEnrolledCourseViewActions";
-import AdminStudentCourseActions from "../../components/actions/course-actions/AdminStudentCourseActions";
+import StudentEnrolledCourseViewActions from "../../components/actions/StudentEnrolledCourseViewActions";
+import AdminStudentCourseActions from "../../components/actions/AdminStudentCourseActions";
 
 function AllCoursesOfStudent(props) {
     const router = useRouter();

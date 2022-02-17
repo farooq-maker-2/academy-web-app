@@ -3,10 +3,10 @@ import {withRouter} from "next/router";
 import {deleteCourse, enrollStudentToCourse, getAllCoursesOfTeacher, reFetchCourses} from "../../lib/lib";
 import Cookies from "js-cookie";
 import {message, Table} from "antd";
-import AdminCourseActions from "../../components/actions/course-actions/AdminCourseActions";
+import AdminCourseActions from "../../components/actions/AdminCourseActions";
 import "antd/dist/antd.css";
-import StudentCourseEnrollActions from "../../components/actions/course-actions/StudentCourseEnrollActions";
-import TeacherCourseActions from "../../components/actions/course-actions/TeacherCourseActions";
+import StudentCourseEnrollActions from "../../components/actions/StudentCourseEnrollActions";
+import TeacherCourseActions from "../../components/actions/TeacherCourseActions";
 
 function AllCoursesOFSearchedTeacher(props) {
 

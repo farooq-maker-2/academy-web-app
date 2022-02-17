@@ -1,29 +1,25 @@
 import {Popconfirm} from "antd";
+import {routeTOAllCoursesOfTeacher, deactivateUser} from "../../lib/lib";
 import {useRouter} from "next/router";
-import {optOutHandler} from "../../../lib/lib";
 
-const StudentEnrolledCourseViewActions = ({studentId, course, courses, setCourses}) => {
+const AdminTeacherActions = ({teacher}) => {
 
     const router = useRouter();
-    const viewCourse = () => {
-        return router.push({
-            pathname: '/course_details',
-            query: {courseId: course.id}
-        });
-    };
-
     return (
+
         <div className="policy-package-actions">
-            <a href="#" onClick={viewCourse}>View</a><br/>
+            <a href="#" onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}> View Courses</a>
             <Popconfirm
-                title={"Opt out from this course?"}
+                title={"Deactivate teacher?"}
                 okText="Yes"
                 cancelText="No"
-                onConfirm={() => optOutHandler(studentId, course.id, courses, setCourses)}
+                onConfirm={() => deactivateUser(teacher.id, 'teacher')}
             >
-                <a href="#">Opt Out</a>
+                <a href="#">Deactivate</a>
             </Popconfirm>
+
             <style jsx global>{`
+
         .policy-package-actions * {
           padding: 8px 0;
         }
@@ -39,4 +35,4 @@ const StudentEnrolledCourseViewActions = ({studentId, course, courses, setCourse
     );
 };
 
-export default StudentEnrolledCourseViewActions;
+export default AdminTeacherActions;

@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react'
 import "antd/dist/antd.css";
 import {message, Table} from 'antd';
 import {deleteCourse, enrollStudentToCourse, getTrendingCourses, reFetchCourses} from "../../lib/lib";
-import AdminCourseActions from "../../components/actions/course-actions/AdminCourseActions";
-import StudentCourseEnrollActions from "../../components/actions/course-actions/StudentCourseEnrollActions";
+import AdminCourseActions from "../../components/actions/AdminCourseActions";
+import StudentCourseEnrollActions from "../../components/actions/StudentCourseEnrollActions";
 import Cookies from "js-cookie";
 
 export default function TopTrending() {

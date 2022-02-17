@@ -1,5 +1,5 @@
 import {Popconfirm} from "antd";
-import {enrollStudentToCourse} from "../../../lib/lib";
+import {enrollStudentToCourse} from "../../lib/lib";
 
 const StudentCourseEnrollActions = ({course}) => {
 

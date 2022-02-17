@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {getCourseContents} from "../../lib/lib";
 import {Table} from "antd";
 import "antd/dist/antd.css";
-import StudentCourseContentActions from "../../components/actions/course-actions/StudentCourseContentActions";
+import StudentCourseContentActions from "../../components/actions/StudentCourseContentActions";
 
 function StudentCourseDetails(props) {
     const {Column} = Table;

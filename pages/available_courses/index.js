@@ -3,7 +3,7 @@ import "antd/dist/antd.css";
 import {message, Table} from 'antd';
 import {deleteCourse, enrollStudentToCourse, getAllCourses, reFetchCourses} from "../../lib/lib";
 import Cookies from "js-cookie";
-import StudentCourseEnrollActions from "../../components/actions/course-actions/StudentCourseEnrollActions";
+import StudentCourseEnrollActions from "../../components/actions/StudentCourseEnrollActions";
 
 export default function AvailableCourses(props) {
 

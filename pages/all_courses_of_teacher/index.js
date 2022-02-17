@@ -4,9 +4,9 @@ import {deleteCourse, enrollStudentToCourse, getAllCoursesOfTeacher, reFetchCour
 import Cookies from "js-cookie";
 import {message, Table} from "antd";
 import "antd/dist/antd.css";
-import AdminCourseActions from "../../components/actions/course-actions/AdminCourseActions";
-import StudentCourseActions from "../../components/actions/course-actions/StudentCourseEnrollActions";
-import TeacherCourseActions from "../../components/actions/course-actions/TeacherCourseActions";
+import AdminCourseActions from "../../components/actions/AdminCourseActions";
+import StudentCourseActions from "../../components/actions/StudentCourseEnrollActions";
+import TeacherCourseActions from "../../components/actions/TeacherCourseActions";
 
 function AllCoursesOFTeacher(props) {
 

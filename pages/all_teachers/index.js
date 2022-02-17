@@ -3,9 +3,9 @@ import {enrollStudentToCourse, getAllTeachers} from "../../lib/lib";
 import {Table} from "antd";
 import "antd/dist/antd.css";
 import Cookies from "js-cookie";
-import StudentCourseActions from "../../components/actions/course-actions/StudentCourseEnrollActions";
-import TeacherCourseActions from "../../components/actions/course-actions/TeacherCourseActions";
-import AdminTeacherActions from "../../components/actions/course-actions/AdminTeacherActions";
+import StudentCourseActions from "../../components/actions/StudentCourseEnrollActions";
+import TeacherCourseActions from "../../components/actions/TeacherCourseActions";
+import AdminTeacherActions from "../../components/actions/AdminTeacherActions";
 
 export default function AllTeachers() {
 

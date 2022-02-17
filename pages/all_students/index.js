@@ -3,7 +3,7 @@ import {getAllStudents} from "../../lib/lib";
 import {Table} from "antd";
 import "antd/dist/antd.css";
 import Cookies from "js-cookie";
-import AdminStudentActions from "../../components/actions/course-actions/AdminStudentActions";
+import AdminStudentActions from "../../components/actions/AdminStudentActions";
 
 export default function AllStudents() {
 

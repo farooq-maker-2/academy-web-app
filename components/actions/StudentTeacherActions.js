@@ -1,4 +1,4 @@
-import {routeTOAllCoursesOfTeacher} from "../../../lib/lib";
+import {routeTOAllCoursesOfTeacher} from "../../lib/lib";
 import {useRouter} from "next/router";
 
 const TeacherTeacherActions = ({teacher}) => {
