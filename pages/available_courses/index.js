@@ -4,12 +4,24 @@ import {message, Table} from 'antd';
 import {deleteCourse, enrollStudentToCourse, getAllCourses, reFetchCourses} from "../../lib/lib";
 import Cookies from "js-cookie";
 import StudentCourseEnrollActions from "../../components/actions/StudentCourseEnrollActions";
+import AdminCourseActions from "../../components/actions/AdminCourseActions";
 
 export default function AvailableCourses(props) {
 
     const {Column} = Table;
     const [courses, setCourses] = useState(props.courses);
     const [pageIndex, setPageIndex] = useState(0);
+
+    const handleOnDeleteCourse = async (courseId) => {
+        deleteCourse(courseId)
+            .then(() => {
+                message.success(`Course ${courseId} has been deleted`);
+                reFetchCourses(pageIndex, setCourses);
+            })
+            .catch(() => {
+                message.error("There was an error encountered while deleting.");
+            });
+    };
 
     useEffect(() => {
         getAllCourses(pageIndex).then(res => {
@@ -22,9 +34,9 @@ export default function AvailableCourses(props) {
     }, [pageIndex]);
 
     return (
-        <div>
-            <div className="d-inline-block w-auto p-3 text-center center">
-                <h1>All Courses</h1>
+        <div className="text-center m-auto table-container">
+            <h1 className="title">All Courses</h1>
+            <div className="">
                 <Table dataSource={courses} rowKey="id">
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
@@ -38,9 +50,9 @@ export default function AvailableCourses(props) {
                         render={(_, course) => {
                             if (Cookies.get("role") === 'student') {
                                 return <StudentCourseEnrollActions course={course} onEnroll={enrollStudentToCourse}/>;
-                            }/*else if(Cookies.get("role") === 'teacher'){
-                            return <TeacherCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
-                        }*/
+                            } else if (Cookies.get("role") === 'admin') {
+                                return <AdminCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
+                            }
                         }}
                     />
                 </Table>
@@ -48,7 +60,6 @@ export default function AvailableCourses(props) {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>

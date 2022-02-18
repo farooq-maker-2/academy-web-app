@@ -25,7 +25,7 @@ function StudentCourseDetails(props) {
 
     return (
         <div>
-            <div className="w-50 text-center end-50 center">
+            <div className="text-center m-auto table-container">
                 <h1 className="title mb-4">Course Contents</h1>
                 <Table dataSource={contents} rowKey="id">
 
@@ -45,7 +45,6 @@ function StudentCourseDetails(props) {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>

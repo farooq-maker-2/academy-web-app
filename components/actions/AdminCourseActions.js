@@ -5,7 +5,7 @@ const AdminCourseActions = ({course, onDelete}) => {
     return (
         <div className="policy-package-actions">
             <Popconfirm
-                title={"Delete this personalization rule?"}
+                title={"Delete this Course?"}
                 okText="Yes"
                 cancelText="No"
                 onConfirm={() => onDelete(course.id)}

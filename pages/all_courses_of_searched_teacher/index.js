@@ -41,29 +41,37 @@ function AllCoursesOFSearchedTeacher(props) {
 
 
     return (
-        <div className="w-50 text-center end-50">
-            <h1 className="title mb-4">All Courses Of Teacher</h1>
-            <Table dataSource={courses} rowKey="id">
+        <div>
+            <div className="text-center center table-container">
+                <h1 className="title mb-4">All Courses Of Teacher</h1>
+                <Table dataSource={courses} rowKey="id">
 
-                <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
-                <Column align="center" title="Description" dataIndex="description" key="description"/>
-                <Column align="center" title="Level" dataIndex="level" key="level"/>
-                <Column
-                    align="center"
-                    title="Actions"
-                    dataIndex="actions"
-                    key="actions"
-                    render={(_, course) => {
-                        if (Cookies.get("role") === 'admin') {
-                            return <AdminCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
-                        } else if (Cookies.get("role") === 'student') {
-                            return <StudentCourseEnrollActions course={course} onEnroll={enrollStudentToCourse}/>;
-                        } else if (Cookies.get("role") === 'teacher') {
-                            return <TeacherCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
-                        }
-                    }}
-                />
-            </Table>
+                    <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
+                    <Column align="center" title="Description" dataIndex="description" key="description"/>
+                    <Column align="center" title="Level" dataIndex="level" key="level"/>
+                    <Column
+                        align="center"
+                        title="Actions"
+                        dataIndex="actions"
+                        key="actions"
+                        render={(_, course) => {
+                            if (Cookies.get("role") === 'admin') {
+                                return <AdminCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
+                            } else if (Cookies.get("role") === 'student') {
+                                return <StudentCourseEnrollActions course={course} onEnroll={enrollStudentToCourse}/>;
+                            } else if (Cookies.get("role") === 'teacher') {
+                                return <TeacherCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
+                            }
+                        }}
+                    />
+                </Table>
+            </div>
+            <style jsx global>{`
+                .center {
+                    margin: auto;
+                    border: 3px solid green;
+                    padding: 10px;
+                }`}</style>
         </div>)
 }
 

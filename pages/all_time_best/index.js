@@ -35,9 +35,10 @@ export default function AllTimeBest() {
 
 
     return (
-        <div>
-            <div className="d-inline-block w-auto text-center center">
-                <h1 className="title">All Time Best Courses</h1>
+
+        <div className="text-center">
+            <h1 className="title">All Time Best Courses</h1>
+            <div className="m-auto table-container">
                 <Table dataSource={courses} rowKey="id">
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>
@@ -62,7 +63,6 @@ export default function AllTimeBest() {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>

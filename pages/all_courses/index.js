@@ -8,25 +8,18 @@ const AllCourses = (props) => {
 
     return (
         <div>
-            <div className="w-100 center position-absolute">
+            <div>
                 <SearchTeacher/>
-                <div className="d-inline-block p-10 panel-width-30">
+                <div className="p-10">
                     <AvailableCourses courses={props.courses}/>
                 </div>
-                <div className="d-inline-block p-10 panel-width-30">
+                <div className="p-10">
                     <AllTime/>
                 </div>
-                <div className="d-inline-block p-10 panel-width-30">
+                <div className="p-10">
                     <TrendingCourses/>
                 </div>
             </div>
-            <style jsx global>{`
-                .center {
-                    margin: auto;
-                    width: 50%;
-                    border: 3px solid green;
-                    padding: 10px;
-                }`}</style>
         </div>
     );
 }

@@ -40,7 +40,7 @@ function AllCoursesOFTeacher(props) {
 
     return (
         <div>
-            <div className="block w-75 text-center center">
+            <div className="text-center m-auto table-container">
                 <h1 className="title">All Courses Of Teacher</h1>
                 <Table dataSource={courses} rowKey="id">
 
@@ -67,7 +67,6 @@ function AllCoursesOFTeacher(props) {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>

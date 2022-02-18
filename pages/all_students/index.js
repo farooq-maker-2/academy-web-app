@@ -26,7 +26,7 @@ export default function AllStudents() {
 
     return (
         <div>
-            <div className="block w-50 p-10 text-center center">
+            <div className="text-center m-auto table-container">
                 <h1 className="text-center title">All Students</h1>
                 <Table dataSource={students} rowKey="id">
 
@@ -48,7 +48,6 @@ export default function AllStudents() {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>

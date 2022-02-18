@@ -73,7 +73,7 @@ const Layout = (props) => {
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={logout}>Logout</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={()=>logout(router)}>Logout</a>
                 </li>
             </ul>
         )
@@ -95,7 +95,7 @@ const Layout = (props) => {
                     <a href="#" className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={logout}>Logout</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={()=>logout(router)}>Logout</a>
                 </li>
             </ul>
         )
@@ -113,7 +113,7 @@ const Layout = (props) => {
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={logout}>Logout</a>
+                    <a href="#" className="nav-link active nav-item-text" onClick={()=>logout(router)}>Logout</a>
                 </li>
             </ul>
         )

@@ -25,7 +25,7 @@ export default function AllTeachers() {
 
     return (
         <div>
-            <div className="block w-50 p-10 text-center center">
+            <div className="p-10 text-center m-auto table-container">
                 <h1 className="text-center title">All Teachers</h1>
                 <Table dataSource={teachers} rowKey="id">
                     <Column align="center" title="Name" dataIndex="lastName" key="lastName"/>
@@ -50,7 +50,6 @@ export default function AllTeachers() {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>

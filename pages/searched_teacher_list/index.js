@@ -3,7 +3,6 @@ import Cookies from "js-cookie";
 import {useRouter} from "next/router";
 import axios from "axios";
 import {publicRuntimeConfig} from "../../next.config";
-import TeacherListItem from "../../components/lists/TeacherListItem";
 import {Table} from "antd";
 import "antd/dist/antd.css";
 import {enrollStudentToCourse} from "../../lib/lib";

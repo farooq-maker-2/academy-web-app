@@ -16,7 +16,7 @@ export default function TopTrending() {
         deleteCourse(courseId)
             .then(() => {
                 message.success(`Course ${courseId} has been deleted`);
-                reFetchCourses(page, setCourses);
+                reFetchCourses(pageIndex, setCourses);
             })
             .catch(() => {
                 message.error("There was an error encountered while deleting.");
@@ -36,9 +36,9 @@ export default function TopTrending() {
 
 
     return (
-        <div>
-            <div className="d-inline-block w-auto text-center center">
-                <h1 className="title">Top Trending</h1>
+        <div className="block text-center">
+            <h1 className="title">Top Trending</h1>
+            <div className="m-auto table-container">
                 <Table dataSource={courses} rowKey="id">
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
@@ -64,10 +64,10 @@ export default function TopTrending() {
             <style jsx global>{`
                 .center {
                     margin: auto;
-                    width: 50%;
                     border: 3px solid green;
                     padding: 10px;
                 }`}</style>
         </div>
+
     );
 }
