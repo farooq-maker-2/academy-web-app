@@ -34,7 +34,13 @@ function AllCoursesOfStudent(props) {
         <div>
             <div className="text-center m-auto table-container">
                 <h1 className="title text-uppercase">All Courses Of Student</h1>
-                <Table dataSource={courses} rowKey="id">
+                <Table dataSource={courses}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>

@@ -42,7 +42,13 @@ function AllCoursesOFTeacher(props) {
         <div>
             <div className="text-center m-auto table-container">
                 <h1 className="title">All Courses Of Teacher</h1>
-                <Table dataSource={courses} rowKey="id">
+                <Table dataSource={courses}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>
@@ -53,11 +59,11 @@ function AllCoursesOFTeacher(props) {
                         dataIndex="actions"
                         key="actions"
                         render={(_, course) => {
-                            if(Cookies.get("role") === 'admin'){
+                            if (Cookies.get("role") === 'admin') {
                                 return <AdminCourseActions course={course} onDelete={handleOnDeleteCourse}/>;
-                            }else if(Cookies.get("role") === 'student'){
+                            } else if (Cookies.get("role") === 'student') {
                                 return <StudentCourseActions course={course} onEnroll={enrollStudentToCourse}/>;
-                            }else if(Cookies.get("role") === 'teacher'){
+                            } else if (Cookies.get("role") === 'teacher') {
                                 return <TeacherCourseActions course={course}/>;
                             }
                         }}

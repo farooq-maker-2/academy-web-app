@@ -39,7 +39,13 @@ export default function TopTrending() {
         <div className="block text-center">
             <h1 className="title">Top Trending</h1>
             <div className="m-auto table-container">
-                <Table dataSource={courses} rowKey="id">
+                <Table dataSource={courses}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>

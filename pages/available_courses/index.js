@@ -37,7 +37,13 @@ export default function AvailableCourses(props) {
         <div className="text-center m-auto table-container">
             <h1 className="title">All Courses</h1>
             <div className="">
-                <Table dataSource={courses} rowKey="id">
+                <Table
+                    dataSource={courses}
+                    rowKey="id"
+                    pagination={{
+                        pageSizeOptions: ["5", "10"],
+                        showSizeChanger: false
+                    }}>
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>

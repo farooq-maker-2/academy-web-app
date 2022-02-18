@@ -6,7 +6,7 @@ const TeacherCourseActions = ({course}) => {
     const router = useRouter();
     return (
         <div className="policy-package-actions">
-            <a href="#" onClick={() => routeToTeacherCourseDetails(course, router)}>View</a>
+            <a onClick={() => routeToTeacherCourseDetails(course, router)}>View</a>
             <style jsx global>{`
         .policy-package-actions {
           display: flex;

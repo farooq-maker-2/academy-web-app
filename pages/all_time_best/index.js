@@ -39,7 +39,13 @@ export default function AllTimeBest() {
         <div className="text-center">
             <h1 className="title">All Time Best Courses</h1>
             <div className="m-auto table-container">
-                <Table dataSource={courses} rowKey="id">
+                <Table dataSource={courses}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>
                     <Column align="center" title="Level" dataIndex="level" key="level"/>

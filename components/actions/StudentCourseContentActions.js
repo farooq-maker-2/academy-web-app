@@ -4,7 +4,7 @@ const StudentCourseContentActions = ({courseId, content}) => {
 
     return (
         <div className="policy-package-actions">
-            <a href="#" onClick={() => downloadContent(courseId, content)}>Download</a><br/>
+            <a onClick={() => downloadContent(courseId, content)}>Download</a><br/>
             <style jsx global>{`
         .policy-package-actions * {
           padding: 8px 0;

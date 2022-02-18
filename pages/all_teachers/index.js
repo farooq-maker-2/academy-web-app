@@ -17,7 +17,7 @@ export default function AllTeachers() {
         getAllTeachers(pageIndex).then(res => {
             if (res.data.data.content.length !== 0) {
                 setTeachers(res.data.data.content)
-            }else{
+            } else {
                 window.alert('failed to fetch teachers')
             }
         }).catch(err => console.log("Error ", err));
@@ -27,7 +27,13 @@ export default function AllTeachers() {
         <div>
             <div className="p-10 text-center m-auto table-container">
                 <h1 className="text-center title">All Teachers</h1>
-                <Table dataSource={teachers} rowKey="id">
+                <Table dataSource={teachers}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
                     <Column align="center" title="Name" dataIndex="lastName" key="lastName"/>
                     <Column align="center" title="Status" dataIndex="status" key="status"/>
                     <Column
@@ -36,11 +42,11 @@ export default function AllTeachers() {
                         dataIndex="actions"
                         key="actions"
                         render={(_, teacher) => {
-                            if(Cookies.get("role") === 'admin'){
+                            if (Cookies.get("role") === 'admin') {
                                 return <AdminTeacherActions teacher={teacher}/>;
-                            }else if(Cookies.get("role") === 'student'){
+                            } else if (Cookies.get("role") === 'student') {
                                 return <StudentCourseActions teacher={teacher} onEnroll={enrollStudentToCourse}/>;
-                            }else if(Cookies.get("role") === 'teacher'){
+                            } else if (Cookies.get("role") === 'teacher') {
                                 return <TeacherCourseActions teacher={teacher}/>;
                             }
                         }}

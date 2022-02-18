@@ -11,13 +11,13 @@ const StudentCourseEnrollActions = ({course}) => {
                 cancelText="No"
                 onConfirm={() => enrollStudentToCourse(course.id).then(res => {
                     if (res.data.success && res.data.success === true) {
-                        window.alert("enrolled successfully")
+                        window.alert(res.data.message)
                     } else {
                         window.alert("failed to enroll")
                     }
                 })}
             >
-                <a href="#">Enroll</a>
+                <a>Enroll</a>
             </Popconfirm>
 
             <style jsx global>{`

@@ -44,7 +44,13 @@ function AllCoursesOFSearchedTeacher(props) {
         <div>
             <div className="text-center center table-container">
                 <h1 className="title mb-4">All Courses Of Teacher</h1>
-                <Table dataSource={courses} rowKey="id">
+                <Table dataSource={courses}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>

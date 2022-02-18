@@ -28,7 +28,13 @@ export default function AllStudents() {
         <div>
             <div className="text-center m-auto table-container">
                 <h1 className="text-center title">All Students</h1>
-                <Table dataSource={students} rowKey="id">
+                <Table dataSource={students}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="Name" dataIndex="lastName" key="lastName"/>
                     <Column align="center" title="Status" dataIndex="status" key="status"/>
@@ -38,7 +44,7 @@ export default function AllStudents() {
                         dataIndex="actions"
                         key="actions"
                         render={(_, student) => {
-                            if(Cookies.get("role") === 'admin'){
+                            if (Cookies.get("role") === 'admin') {
                                 return <AdminStudentActions student={student}/>;
                             }
                         }}

@@ -62,18 +62,18 @@ const Layout = (props) => {
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text"
+                    <a className="nav-link active nav-item-text"
                        onClick={() => {
                            router.push('all_courses')
                        }}>Available Courses</a>
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
+                    <a className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
                 </li>
 
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={()=>logout(router)}>Logout</a>
+                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
                 </li>
             </ul>
         )
@@ -81,21 +81,24 @@ const Layout = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={() => routeToAddCourse(router)}>
+                    <a className="nav-link active nav-item-text"
+                       onClick={() =>
+                           router.push('/add_course')}>
                         Upload Course
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text"
+                    <a className="nav-link active nav-item-text"
                        onClick={() => {
                            router.push('all_courses')
-                       }}>Courses</a>
+                       }}>Courses
+                    </a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
+                    <a className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={()=>logout(router)}>Logout</a>
+                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
                 </li>
             </ul>
         )
@@ -103,17 +106,17 @@ const Layout = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={() => routeToAllStudents(router)}>
+                    <a className="nav-link active nav-item-text" onClick={() => routeToAllStudents(router)}>
                         All Students
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={() => routeToAllTeachers(router)}>
+                    <a className="nav-link active nav-item-text" onClick={() => routeToAllTeachers(router)}>
                         All Teachers
                     </a>
                 </li>
                 <li className="nav-item">
-                    <a href="#" className="nav-link active nav-item-text" onClick={()=>logout(router)}>Logout</a>
+                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
                 </li>
             </ul>
         )
@@ -131,7 +134,7 @@ const Layout = (props) => {
             <nav className="navbar navbar-expand-sm bg-dark mb-0"
                  styles="background-color: #1884b5">
                 <div className="container-fluid">
-                    <a href="#" className="navbar-brand nav-item-text" onClick={() => {
+                    <a className="navbar-brand nav-item-text" onClick={() => {
                         return router.push('/home')
                     }}>Home</a>
                     <div className="navbar-brand">

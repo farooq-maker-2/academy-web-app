@@ -10,7 +10,7 @@ const AdminCourseActions = ({course, onDelete}) => {
                 cancelText="No"
                 onConfirm={() => onDelete(course.id)}
             >
-                <a href="#">Delete</a>
+                <a>Delete</a>
             </Popconfirm>
 
             <style jsx global>{`

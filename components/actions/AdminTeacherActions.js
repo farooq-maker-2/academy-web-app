@@ -8,14 +8,14 @@ const AdminTeacherActions = ({teacher}) => {
     return (
 
         <div className="policy-package-actions">
-            <a href="#" onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}> View Courses</a>
+            <a onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}> View Courses</a>
             <Popconfirm
                 title={"Deactivate teacher?"}
                 okText="Yes"
                 cancelText="No"
                 onConfirm={() => deactivateUser(teacher.id, 'teacher')}
             >
-                <a href="#">Deactivate</a>
+                <a>Deactivate</a>
             </Popconfirm>
 
             <style jsx global>{`

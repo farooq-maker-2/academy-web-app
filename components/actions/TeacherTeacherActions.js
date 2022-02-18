@@ -7,7 +7,7 @@ const TeacherTeacherActions = ({teacher}) => {
     return (
         <div className="policy-package-actions">
 
-            <a href="#" onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}>View Courses</a>
+            <a onClick={() => routeTOAllCoursesOfTeacher(teacher.id, router)}>View Courses</a>
 
             <style jsx global>{`
 

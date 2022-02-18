@@ -72,7 +72,13 @@ function TeacherCourseDetails(props) {
                     <br/>
                     <button className="btn btn-lg btn-success" type="submit">Upload</button>
                 </form>
-                <Table dataSource={contents} rowKey="id">
+                <Table dataSource={contents}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="File Name" dataIndex="fileName" key="fileName"/>
                     <Column align="center" title="Size" dataIndex="description" key="description"/>

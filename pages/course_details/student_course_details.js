@@ -27,7 +27,13 @@ function StudentCourseDetails(props) {
         <div>
             <div className="text-center m-auto table-container">
                 <h1 className="title mb-4">Course Contents</h1>
-                <Table dataSource={contents} rowKey="id">
+                <Table dataSource={contents}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="File Name" dataIndex="fileName" key="fileName"/>
                     <Column align="center" title="Size" dataIndex="description" key="description"/>

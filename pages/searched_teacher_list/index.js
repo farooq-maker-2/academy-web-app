@@ -40,7 +40,13 @@ export default function SearchedTeacher() {
         <div>
             <div className="w-50 p-3 text-center center">
                 <h1 className="text-center title">All Teachers</h1>
-                <Table dataSource={teachers} rowKey="id">
+                <Table dataSource={teachers}
+                       rowKey="id"
+                       pagination={{
+                           pageSizeOptions: ["5", "10", "20"],
+                           showSizeChanger: true,
+                           locale: { items_per_page: "" }
+                       }}>
 
                     <Column align="center" title="Name" dataIndex="lastName" key="lastName"/>
                     <Column align="center" title="Status" dataIndex="status" key="status"/>

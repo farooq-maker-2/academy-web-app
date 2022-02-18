@@ -6,12 +6,12 @@ const AdminStudentCourseActions = ({studentId, course, courses, setCourses}) => 
     return (
         <div className="policy-package-actions">
             <Popconfirm
-                title={"Delete this personalization rule?"}
+                title={"opt out student from this course?"}
                 okText="Yes"
                 cancelText="No"
                 onConfirm={() => optOutHandler(studentId, course.id, courses, setCourses)}
             >
-                <a href="#">optout</a>
+                <a>optout</a>
             </Popconfirm>
 
             <style jsx global>{`
