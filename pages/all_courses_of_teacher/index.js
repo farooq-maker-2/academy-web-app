@@ -40,7 +40,7 @@ function AllCoursesOFTeacher(props) {
 
     return (
         <div>
-            <div className="text-center m-auto table-container">
+            <div className="text-center m-auto main-table-container">
                 <h1 className="title">All Courses Of Teacher</h1>
                 <Table dataSource={courses}
                        rowKey="id"

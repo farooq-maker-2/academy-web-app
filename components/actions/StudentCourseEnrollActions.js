@@ -4,7 +4,7 @@ import {enrollStudentToCourse} from "../../lib/lib";
 const StudentCourseEnrollActions = ({course}) => {
 
     return (
-        <div className="policy-package-actions">
+        <div className="actions">
             <Popconfirm
                 title={"Enroll this course?"}
                 okText="Yes"
@@ -19,20 +19,15 @@ const StudentCourseEnrollActions = ({course}) => {
             >
                 <a>Enroll</a>
             </Popconfirm>
-
             <style jsx global>{`
-        .policy-package-actions {
-          display: flex;
-          justify-content: space-around;
-        }
-        .policy-package-actions * {
+        .actions * {
           padding: 8px 0;
         }
-        .policy-package-actions a {
+        .actions a {
           margin-right: 1rem;
         }
 
-        .policy-package-actions a:hover {
+        .a:hover {
           color: purple;
         }
       `}</style>

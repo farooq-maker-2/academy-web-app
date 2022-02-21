@@ -3,18 +3,17 @@ import {downloadContent} from "../../lib/lib";
 const StudentCourseContentActions = ({courseId, content}) => {
 
     return (
-        <div className="policy-package-actions">
+        <div className="actions">
             <a onClick={() => downloadContent(courseId, content)}>Download</a><br/>
             <style jsx global>{`
-        .policy-package-actions * {
+        .actions * {
           padding: 8px 0;
         }
-        
-        .policy-package-actions a {
+        .actions a {
           margin-right: 1rem;
         }
 
-        .policy-package-actions a:hover {
+        .a:hover {
           color: purple;
         }
       `}</style>

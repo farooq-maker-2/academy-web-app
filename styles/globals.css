@@ -170,6 +170,21 @@ body {
     margin-right: 10px;
 }
 
+.main-table-container {
+    width: 1300px;
+}
+
 .table-container {
-    width: 1024px;
+    width: 400px;
+}
+
+.actions * {
+    padding: 8px 0;
+}
+.actions a {
+    margin-right: 1rem;
+}
+
+.actions a:hover {
+    color: purple;
 }

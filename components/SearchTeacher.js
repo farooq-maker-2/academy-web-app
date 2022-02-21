@@ -23,7 +23,7 @@ function SearchTeacher() {
                        onChange={(event) => handleChange(event, setTeacherName)}/>
                 <button className="w-auto btn-sm btn-secondary mb-lg-4"
                         type="submit"
-                        onClick={() => handleSearch(teacherName, router/*, setTeachers*/)}>
+                        onClick={() => handleSearch(teacherName, router)}>
                     Search
                 </button>
             </div>

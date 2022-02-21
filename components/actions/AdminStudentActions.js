@@ -7,7 +7,7 @@ const AdminStudentActions = ({student}) => {
 
     const router = useRouter();
     return (
-        <div className="policy-package-actions">
+        <div className="actions">
 
             <a onClick={() => routeToAllCoursesOfStudent(student.id, router)}>View Courses</a>
             <Popconfirm
@@ -18,19 +18,16 @@ const AdminStudentActions = ({student}) => {
             >
                 <a>Deactivate</a>
             </Popconfirm>
-
             <style jsx global>{`
-
-        .policy-package-actions * {
+        .actions * {
           padding: 8px 0;
         }
-
-        .policy-package-actions a {
+        .actions a {
           margin-right: 1rem;
         }
 
-        .policy-package-actions a:hover {
-          color:  purple;
+        .a:hover {
+          color: purple;
         }
       `}</style>
         </div>

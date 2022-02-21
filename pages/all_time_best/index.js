@@ -36,16 +36,12 @@ export default function AllTimeBest() {
 
     return (
 
-        <div className="text-center">
-            <h1 className="title">All Time Best Courses</h1>
-            <div className="m-auto table-container">
+        <div className="text-center mb-lg-4">
+            <h3>All Time Best Courses</h3>
+            <div className="table-container">
                 <Table dataSource={courses}
                        rowKey="id"
-                       pagination={{
-                           pageSizeOptions: ["5", "10", "20"],
-                           showSizeChanger: true,
-                           locale: { items_per_page: "" }
-                       }}>
+                       pagination={false}>
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
                     <Column align="center" title="Description" dataIndex="description" key="description"/>
                     <Column align="center" title="Level" dataIndex="level" key="level"/>
@@ -66,12 +62,6 @@ export default function AllTimeBest() {
                     />
                 </Table>
             </div>
-            <style jsx global>{`
-                .center {
-                    margin: auto;
-                    border: 3px solid green;
-                    padding: 10px;
-                }`}</style>
         </div>
     );
 }

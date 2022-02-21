@@ -13,7 +13,7 @@ const StudentEnrolledCourseViewActions = ({studentId, course, courses, setCourse
     };
 
     return (
-        <div className="policy-package-actions">
+        <div className="actions">
             <a onClick={viewCourse}>View</a><br/>
             <Popconfirm
                 title={"Opt out from this course?"}
@@ -24,14 +24,14 @@ const StudentEnrolledCourseViewActions = ({studentId, course, courses, setCourse
                 <a>Opt Out</a>
             </Popconfirm>
             <style jsx global>{`
-        .policy-package-actions * {
+        .actions * {
           padding: 8px 0;
         }
-        .policy-package-actions a {
+        .actions a {
           margin-right: 1rem;
         }
 
-        .policy-package-actions a:hover {
+        .a:hover {
           color: purple;
         }
       `}</style>

@@ -8,18 +8,21 @@ const AllCourses = (props) => {
 
     return (
         <div>
-            <div>
-                <SearchTeacher/>
-                <div className="p-10">
-                    <AvailableCourses courses={props.courses}/>
-                </div>
-                <div className="p-10">
-                    <AllTime/>
-                </div>
-                <div className="p-10">
-                    <TrendingCourses/>
-                </div>
+            <SearchTeacher/>
+            <div className="d-inline-block">
+                <AvailableCourses courses={props.courses}/>
             </div>
+            <div className="table">
+                <AllTime/>
+                <TrendingCourses/>
+            </div>
+            <style jsx global>{`
+                .table {
+                    display: inline-block;
+                    width: 400px;
+                    height: auto; //200px;
+                    padding: 5px;
+                }`}</style>
         </div>
     );
 }

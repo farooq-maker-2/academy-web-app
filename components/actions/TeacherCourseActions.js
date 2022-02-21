@@ -5,23 +5,17 @@ const TeacherCourseActions = ({course}) => {
 
     const router = useRouter();
     return (
-        <div className="policy-package-actions">
+        <div className="actions">
             <a onClick={() => routeToTeacherCourseDetails(course, router)}>View</a>
             <style jsx global>{`
-        .policy-package-actions {
-          display: flex;
-          justify-content: space-around;
-        }
-
-        .policy-package-actions * {
+        .actions * {
           padding: 8px 0;
         }
-
-        .policy-package-actions a {
+        .actions a {
           margin-right: 1rem;
         }
 
-        .policy-package-actions a:hover {
+        .a:hover {
           color: purple;
         }
       `}</style>

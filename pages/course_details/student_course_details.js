@@ -9,18 +9,22 @@ function StudentCourseDetails(props) {
     const [contents, setContents] = useState([]);
     const [courseId, setCourseId] = useState(props.courseId);
 
+    function convertToMB(data) {
+        data.forEach(content => {
+            content.description = (content.description / 1048576).toFixed(1) + ' MB';
+        })
+    }
+
     useEffect(() => {
 
         getCourseContents(props.courseId).then(res => {
             if (res.data.success && res.data.success === true) {
-                console.log('contents fetched');
-                console.log(res.data.data);
+                convertToMB(res.data.data);
                 setContents(res.data.data);
             } else {
                 window.alert("failed to get course contents")
             }
         }).catch(err => console.log("Error ", err));
-
     }, []);
 
     return (

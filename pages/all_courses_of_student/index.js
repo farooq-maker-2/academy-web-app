@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {getEnrolledCoursesOfStudent} from "../../lib/lib";
-import {useRouter} from "next/router";
 import {Table} from "antd";
 import Cookies from "js-cookie";
 import StudentEnrolledCourseViewActions from "../../components/actions/StudentEnrolledCourseViewActions";
 import AdminStudentCourseActions from "../../components/actions/AdminStudentCourseActions";
 
 function AllCoursesOfStudent(props) {
-    const router = useRouter();
-    const studentId = router.query.studentId
+    const studentId = props.studentId
     const [courses, setCourses] = useState([]);
     const [pageIndex, setPageIndex] = useState(0);
     const {Column} = Table;
@@ -32,8 +30,8 @@ function AllCoursesOfStudent(props) {
 
     return (
         <div>
-            <div className="text-center m-auto table-container">
-                <h1 className="title text-uppercase">All Courses Of Student</h1>
+            <div className="text-center m-auto main-table-container">
+                <h1 className="title text-uppercase">Your Courses</h1>
                 <Table dataSource={courses}
                        rowKey="id"
                        pagination={{

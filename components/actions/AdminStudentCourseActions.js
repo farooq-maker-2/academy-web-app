@@ -4,26 +4,24 @@ import {optOutHandler} from "../../lib/lib";
 const AdminStudentCourseActions = ({studentId, course, courses, setCourses}) => {
 
     return (
-        <div className="policy-package-actions">
+        <div className="actions">
             <Popconfirm
                 title={"opt out student from this course?"}
                 okText="Yes"
                 cancelText="No"
                 onConfirm={() => optOutHandler(studentId, course.id, courses, setCourses)}
             >
-                <a>optout</a>
+                <a>OptOut</a>
             </Popconfirm>
-
             <style jsx global>{`
-        .policy-package-actions * {
+        .actions * {
           padding: 8px 0;
         }
-        
-        .policy-package-actions a {
+        .actions a {
           margin-right: 1rem;
         }
 
-        .policy-package-actions a:hover {
+        .a:hover {
           color: purple;
         }
       `}</style>

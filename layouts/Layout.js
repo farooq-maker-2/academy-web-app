@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import {useRouter} from "next/router";
 import Cookies from "js-cookie";
-import {deactivateUser, logout, routeToAddCourse, routeToAllStudents, routeToAllTeachers} from "../lib/lib";
+import {deactivateUser, logout} from "../lib/lib";
 
 //
 // About hyperlinks:
@@ -41,6 +41,20 @@ const Layout = (props) => {
     }
 
     let menu;
+    let account;
+    if (Cookies.get('access_token')) {
+        account = (
+            <ul className="navbar-nav me-auto mb-2 mb-md-0">
+                <li className="nav-item">
+                    <a className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
+                </li>
+
+                <li className="nav-item">
+                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
+                </li>
+            </ul>
+        )
+    }
 
     if (!Cookies.get('access_token')) {
         menu = (
@@ -60,26 +74,26 @@ const Layout = (props) => {
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'student') {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
-
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text"
-                       onClick={() => {
-                           router.push('all_courses')
-                       }}>Available Courses</a>
+                <li className="nav-item nav-link active nav-item-text">
+                    <Link href="/home">
+                        Home
+                    </Link>
                 </li>
-
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
-                </li>
-
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
+                <li className="nav-item nav-link active nav-item-text">
+                    <Link href="/all_courses">
+                        Courses
+                    </Link>
                 </li>
             </ul>
         )
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'teacher') {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
+                <li className="nav-item nav-link active nav-item-text">
+                    <Link href="/home">
+                        Home
+                    </Link>
+                </li>
                 <li className="nav-item">
                     <a className="nav-link active nav-item-text"
                        onClick={() =>
@@ -90,33 +104,31 @@ const Layout = (props) => {
                 <li className="nav-item">
                     <a className="nav-link active nav-item-text"
                        onClick={() => {
-                           router.push('all_courses')
+                           router.push('/all_courses')
                        }}>Courses
                     </a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={deactivate}>Deactivate</a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
                 </li>
             </ul>
         )
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'admin') {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={() => routeToAllStudents(router)}>
+                <li className="nav-item nav-link active nav-item-text">
+                    <Link href="/home">
+                        Home
+                    </Link>
+                </li>
+                <li className="nav-item nav-link active nav-item-text">
+                    <Link href="/all_students">
                         All Students
-                    </a>
+                    </Link>
                 </li>
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={() => routeToAllTeachers(router)}>
+                <li className="nav-item nav-link active nav-item-text">
+                    <Link
+                        href="/all_teachers"
+                        className="nav-link active nav-item-text">
                         All Teachers
-                    </a>
-                </li>
-                <li className="nav-item">
-                    <a className="nav-link active nav-item-text" onClick={() => logout(router)}>Logout</a>
+                    </Link>
                 </li>
             </ul>
         )
@@ -134,11 +146,11 @@ const Layout = (props) => {
             <nav className="navbar navbar-expand-sm bg-dark mb-0"
                  styles="background-color: #1884b5">
                 <div className="container-fluid">
-                    <a className="navbar-brand nav-item-text" onClick={() => {
-                        return router.push('/home')
-                    }}>Home</a>
                     <div className="navbar-brand">
                         {menu}
+                    </div>
+                    <div className="navbar-brand">
+                        {account}
                     </div>
                 </div>
             </nav>

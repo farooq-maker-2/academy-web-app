@@ -34,15 +34,16 @@ export default function AvailableCourses(props) {
     }, [pageIndex]);
 
     return (
-        <div className="text-center m-auto table-container">
+        <div className="text-center m-5 main-table-container">
             <h1 className="title">All Courses</h1>
             <div className="">
                 <Table
                     dataSource={courses}
                     rowKey="id"
                     pagination={{
-                        pageSizeOptions: ["5", "10"],
-                        showSizeChanger: false
+                        pageSizeOptions: ["5", "10", "20"],
+                        showSizeChanger: true,
+                        locale: { items_per_page: "" }
                     }}>
 
                     <Column align="center" title="Course Name" dataIndex="courseName" key="courseName"/>
