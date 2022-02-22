@@ -12,7 +12,7 @@ export default function HomeComponent(props) {
     let content;
     if (props.role === 'student') {
         content = <AllCoursesOfStudent studentId={Cookies.get('userId')}/>
-    } else if (props.role === 'teacher') {
+    } else if (props.role === 'teacher' ) {
         content = <AllCoursesOFTeacher teacherId={Cookies.get('userId')}/>
     } else if (props.role === 'admin') {
         content = <AllCourses/>

@@ -7,7 +7,7 @@ import SearchTeacher from "../../components/SearchTeacher";
 const AllCourses = (props) => {
 
     return (
-        <div>
+        <div className="center">
             <SearchTeacher/>
             <div className="d-inline-block">
                 <AvailableCourses courses={props.courses}/>
@@ -19,10 +19,20 @@ const AllCourses = (props) => {
             <style jsx global>{`
                 .table {
                     display: inline-block;
-                    width: 400px;
-                    height: auto; //200px;
+                    width: 450px;
+                    height: auto;//150px;
+                    border: 3px solid green;
                     padding: 5px;
-                }`}</style>
+                    margin: auto
+                }
+                .center {
+                    margin: auto;
+                    border: 3px solid green;
+                    padding: 10px;
+                }
+                `}</style>
+
+
         </div>
     );
 }

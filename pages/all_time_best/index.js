@@ -36,7 +36,7 @@ export default function AllTimeBest() {
 
     return (
 
-        <div className="text-center mb-lg-4">
+        <div className="text-center">
             <h3>All Time Best Courses</h3>
             <div className="table-container">
                 <Table dataSource={courses}

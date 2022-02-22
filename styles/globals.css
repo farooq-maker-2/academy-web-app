@@ -171,7 +171,8 @@ body {
 }
 
 .main-table-container {
-    width: 1300px;
+    width: 1000px;
+    margin: auto;
 }
 
 .table-container {

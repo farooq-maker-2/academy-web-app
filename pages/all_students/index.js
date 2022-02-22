@@ -26,7 +26,7 @@ export default function AllStudents() {
 
     return (
         <div>
-            <div className="text-center m-auto table-container">
+            <div className="text-center m-auto main-table-container">
                 <h1 className="text-center title">All Students</h1>
                 <Table dataSource={students}
                        rowKey="id"

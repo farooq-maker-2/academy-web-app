@@ -90,7 +90,7 @@ const Layout = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link href="/home">
+                    <Link href="/home" className="font-color-white">
                         Home
                     </Link>
                 </li>
@@ -114,19 +114,17 @@ const Layout = (props) => {
         menu = (
             <ul className="navbar-nav me-auto mb-2 mb-md-0">
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link href="/home">
+                    <Link href="/home" className="font-color-white">
                         Home
                     </Link>
                 </li>
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link href="/all_students">
+                    <Link href="/all_students" className="font-color-white">
                         All Students
                     </Link>
                 </li>
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link
-                        href="/all_teachers"
-                        className="nav-link active nav-item-text">
+                    <Link href="/all_teachers" className="font-color-white">
                         All Teachers
                     </Link>
                 </li>
