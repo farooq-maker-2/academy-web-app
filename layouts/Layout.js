@@ -112,19 +112,19 @@ const Layout = (props) => {
         )
     } else if (Cookies.get('access_token') && Cookies.get('role') === 'admin') {
         menu = (
-            <ul className="navbar-nav me-auto mb-2 mb-md-0">
+            <ul className="navbar-nav me-auto mb-2 mb-md-0 font-color-white">
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link href="/home" className="font-color-white">
+                    <Link href="/home">
                         Home
                     </Link>
                 </li>
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link href="/all_students" className="font-color-white">
+                    <Link href="/all_students">
                         All Students
                     </Link>
                 </li>
                 <li className="nav-item nav-link active nav-item-text">
-                    <Link href="/all_teachers" className="font-color-white">
+                    <Link href="/all_teachers">
                         All Teachers
                     </Link>
                 </li>
